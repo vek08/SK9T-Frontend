@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
@@ -32,10 +33,7 @@ import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
-import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,7 +41,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -68,28 +65,10 @@ fun MatchesScreen(
     viewModel: HomeViewModel
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val pullToRefreshState = rememberPullToRefreshState()
     var selectedFilter by remember { mutableStateOf(MatchFilter.ALL) }
     
     val categoryChips = listOf("All", "International", "League", "Domestic", "Women's", "More")
     var selectedCategory by remember { mutableStateOf(categoryChips[0]) }
-
-    if (pullToRefreshState.isRefreshing) {
-        LaunchedEffect(true) {
-            viewModel.loadMatches(isRefresh = true)
-        }
-    }
-
-    LaunchedEffect(uiState) {
-        if (uiState is HomeUiState.Success) {
-            val isRefreshing = (uiState as HomeUiState.Success).isRefreshing
-            if (!isRefreshing) {
-                pullToRefreshState.endRefresh()
-            }
-        } else if (uiState !is HomeUiState.Loading) {
-            pullToRefreshState.endRefresh()
-        }
-    }
 
     Scaffold(
         topBar = {
@@ -112,6 +91,9 @@ fun MatchesScreen(
                     }
                 },
                 actions = {
+                    IconButton(onClick = { viewModel.loadMatches(isRefresh = true) }) {
+                        Icon(imageVector = Icons.Default.Refresh, contentDescription = "Refresh", tint = MaterialTheme.colorScheme.onPrimary)
+                    }
                     IconButton(onClick = { /* Search */ }) {
                         Icon(imageVector = Icons.Default.Search, contentDescription = "Search", tint = MaterialTheme.colorScheme.onPrimary)
                     }
@@ -180,9 +162,7 @@ fun MatchesScreen(
             }
 
             Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .nestedScroll(pullToRefreshState.nestedScrollConnection)
+                modifier = Modifier.fillMaxSize()
             ) {
                 when (val state = uiState) {
                     is HomeUiState.Loading -> {
@@ -261,13 +241,6 @@ fun MatchesScreen(
                         EmptyState()
                     }
                 }
-
-                PullToRefreshContainer(
-                    state = pullToRefreshState,
-                    modifier = Modifier.align(Alignment.TopCenter),
-                    containerColor = MaterialTheme.colorScheme.surface,
-                    contentColor = MaterialTheme.colorScheme.primary
-                )
             }
         }
     }
