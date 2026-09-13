@@ -4,7 +4,7 @@
             "outputFile": "com.k9t.scoreknight.app-mergeReleaseResources-52:/values-v21/values-v21.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\vek\\.gradle\\caches\\9.2.1\\transforms\\490f83673d5376bb8e138af97f7920f5\\workspace\\transformed\\core-1.13.1\\res\\values-v21\\values-v21.xml",
+                    "source": "C:\\Users\\vek\\.gradle\\caches\\transforms-4\\b4fa61e3858af4ff8bfbcc9342057997\\transformed\\core-1.13.1\\res\\values-v21\\values-v21.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,13",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4",

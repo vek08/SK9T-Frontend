@@ -1,5 +1,10 @@
 package com.k9t.scoreknight.domain.model
 
+data class InningScore(
+    val inningName: String,
+    val scoreDetails: String
+)
+
 data class CricketMatch(
     val matchId: String,
     val teamA: String,
@@ -7,7 +12,8 @@ data class CricketMatch(
     val teamALogo: String?,
     val teamBLogo: String?,
     val status: String,
-    val score: String?,
+    val score: String?, // Retained for backwards compatibility if needed
+    val parsedScores: List<InningScore>? = null,
     val venue: String,
     val matchDate: String
 )

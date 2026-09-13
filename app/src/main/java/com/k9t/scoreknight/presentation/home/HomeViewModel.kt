@@ -2,41 +2,80 @@ package com.k9t.scoreknight.presentation.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.k9t.scoreknight.data.local.FavoritesManager
 import com.k9t.scoreknight.domain.usecase.GetHomeMatchesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getHomeMatchesUseCase: GetHomeMatchesUseCase
+    private val getHomeMatchesUseCase: GetHomeMatchesUseCase,
+    private val favoritesManager: FavoritesManager
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<HomeUiState>(HomeUiState.Loading)
-    val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
+    private val _isLoading = MutableStateFlow(true)
+    private val _isRefreshing = MutableStateFlow(false)
+    private val _matchesResult = MutableStateFlow<Result<List<com.k9t.scoreknight.domain.model.CricketMatch>>?>(null)
+
+    val uiState: StateFlow<HomeUiState> = combine(
+        _isLoading,
+        _isRefreshing,
+        _matchesResult,
+        favoritesManager.favorites
+    ) { isLoading, isRefreshing, result, favorites ->
+        if (isLoading && result == null) {
+            return@combine HomeUiState.Loading
+        }
+        
+        result?.fold(
+            onSuccess = { matches ->
+                if (matches.isEmpty()) {
+                    HomeUiState.Empty
+                } else {
+                    HomeUiState.Success(
+                        matches = matches,
+                        favorites = favorites,
+                        isRefreshing = isRefreshing
+                    )
+                }
+            },
+            onFailure = { exception ->
+                HomeUiState.Error(exception.message ?: "An unknown error occurred")
+            }
+        ) ?: HomeUiState.Loading
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = HomeUiState.Loading
+    )
 
     init {
         loadMatches()
     }
 
-    fun loadMatches() {
+    fun loadMatches(isRefresh: Boolean = false) {
         viewModelScope.launch {
-            _uiState.update { HomeUiState.Loading }
-            getHomeMatchesUseCase()
-                .onSuccess { matches ->
-                    if (matches.isEmpty()) {
-                        _uiState.update { HomeUiState.Empty }
-                    } else {
-                        _uiState.update { HomeUiState.Success(matches) }
-                    }
-                }
-                .onFailure { exception ->
-                    _uiState.update { HomeUiState.Error(exception.message ?: "An unknown error occurred") }
-                }
+            if (isRefresh) {
+                _isRefreshing.value = true
+            } else {
+                _isLoading.value = true
+            }
+            
+            val result = getHomeMatchesUseCase()
+            _matchesResult.value = result
+            
+            _isLoading.value = false
+            _isRefreshing.value = false
         }
+    }
+
+    fun toggleFavorite(matchId: String) {
+        favoritesManager.toggleFavorite(matchId)
     }
 }

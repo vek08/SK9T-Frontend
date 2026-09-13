@@ -2,32 +2,36 @@ package com.k9t.scoreknight.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val PrimaryLight = Color(0xFF1E88E5)
+val PrimaryLight = Color(0xFF1A365D) // Deep Sapphire
 val OnPrimaryLight = Color(0xFFFFFFFF)
-val PrimaryContainerLight = Color(0xFFBBDEFB)
-val OnPrimaryContainerLight = Color(0xFF001E36)
+val PrimaryContainerLight = Color(0xFFE2E8F0)
+val OnPrimaryContainerLight = Color(0xFF0F172A)
 
-val SecondaryLight = Color(0xFF00897B)
+val SecondaryLight = Color(0xFF0F766E) // Rich Teal
 val OnSecondaryLight = Color(0xFFFFFFFF)
-val SecondaryContainerLight = Color(0xFFB2DFDB)
-val OnSecondaryContainerLight = Color(0xFF00201C)
+val SecondaryContainerLight = Color(0xFFCCFBF1)
+val OnSecondaryContainerLight = Color(0xFF115E59)
 
-val BackgroundLight = Color(0xFFF5F5F5)
-val OnBackgroundLight = Color(0xFF1E1E1E)
+val BackgroundLight = Color(0xFFF8FAFC) // Slate 50
+val OnBackgroundLight = Color(0xFF0F172A) // Slate 900
 val SurfaceLight = Color(0xFFFFFFFF)
-val OnSurfaceLight = Color(0xFF1E1E1E)
+val OnSurfaceLight = Color(0xFF1E293B) // Slate 800
 
-val PrimaryDark = Color(0xFF90CAF9)
-val OnPrimaryDark = Color(0xFF0D47A1)
-val PrimaryContainerDark = Color(0xFF1565C0)
-val OnPrimaryContainerDark = Color(0xFFE3F2FD)
+val PrimaryDark = Color(0xFF60A5FA) // Blue 400
+val OnPrimaryDark = Color(0xFF000000)
+val PrimaryContainerDark = Color(0xFF1E3A8A)
+val OnPrimaryContainerDark = Color(0xFFDBEAFE)
 
-val SecondaryDark = Color(0xFF80CBC4)
-val OnSecondaryDark = Color(0xFF004D40)
-val SecondaryContainerDark = Color(0xFF00695C)
-val OnSecondaryContainerDark = Color(0xFFE0F2F1)
+val SecondaryDark = Color(0xFF5EEAD4) // Teal 300
+val OnSecondaryDark = Color(0xFF000000)
+val SecondaryContainerDark = Color(0xFF0F766E)
+val OnSecondaryContainerDark = Color(0xFFCCFBF1)
 
-val BackgroundDark = Color(0xFF121212)
-val OnBackgroundDark = Color(0xFFE0E0E0)
-val SurfaceDark = Color(0xFF1E1E1E)
-val OnSurfaceDark = Color(0xFFE0E0E0)
+val BackgroundDark = Color(0xFF0F172A) // Slate 900
+val OnBackgroundDark = Color(0xFFF1F5F9) // Slate 100
+val SurfaceDark = Color(0xFF1E293B) // Slate 800
+val OnSurfaceDark = Color(0xFFF8FAFC) // Slate 50
+
+val LiveIndicatorColor = Color(0xFFEF4444) // Red 500
+val UpcomingIndicatorColor = Color(0xFFF59E0B) // Amber 500
+val CompletedIndicatorColor = Color(0xFF10B981) // Emerald 500

@@ -6,7 +6,7 @@
     debuggable="true"
     mergedManifest="build\intermediates\merged_manifest\debug\processDebugMainManifest\AndroidManifest.xml"
     partialResultsDir="build\intermediates\android_test_lint_partial_results\debug\lintAnalyzeDebugAndroidTest\out"
-    desugaredMethodsFiles="C:\Users\vek\.gradle\caches\9.2.1\transforms\e89ec4292abf8014fe2f069cc8fa354d\workspace\transformed\D8BackportedDesugaredMethods.txt">
+    desugaredMethodsFiles="C:\Users\vek\.gradle\caches\transforms-4\f5c665f8d6b656cb0eac7f8101c7046a\transformed\D8BackportedDesugaredMethods.txt">
   <buildFeatures
       namespacing="REQUIRED"/>
   <sourceProviders>
@@ -25,6 +25,6 @@
       type="INSTRUMENTATION_TEST"
       applicationId="com.k9t.scoreknight.test"
       generatedResourceFolders="build\generated\res\resValues\androidTest\debug"
-      desugaredMethodsFiles="C:\Users\vek\.gradle\caches\9.2.1\transforms\e89ec4292abf8014fe2f069cc8fa354d\workspace\transformed\D8BackportedDesugaredMethods.txt">
+      desugaredMethodsFiles="C:\Users\vek\.gradle\caches\transforms-4\f5c665f8d6b656cb0eac7f8101c7046a\transformed\D8BackportedDesugaredMethods.txt">
   </artifact>
 </variant>

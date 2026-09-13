@@ -6,7 +6,7 @@
     mergedManifest="build\intermediates\merged_manifest\release\processReleaseMainManifest\AndroidManifest.xml"
     proguardFiles="build\intermediates\default_proguard_files\global\proguard-android-optimize.txt-8.5.1;proguard-rules.pro"
     partialResultsDir="build\intermediates\lint_vital_partial_results\release\lintVitalAnalyzeRelease\out"
-    desugaredMethodsFiles="C:\Users\vek\.gradle\caches\9.2.1\transforms\e89ec4292abf8014fe2f069cc8fa354d\workspace\transformed\D8BackportedDesugaredMethods.txt">
+    desugaredMethodsFiles="C:\Users\vek\.gradle\caches\transforms-4\f5c665f8d6b656cb0eac7f8101c7046a\transformed\D8BackportedDesugaredMethods.txt">
   <buildFeatures
       namespacing="REQUIRED"/>
   <sourceProviders>
@@ -26,6 +26,6 @@
       applicationId="com.k9t.scoreknight"
       generatedSourceFolders="build\generated\ksp\release\java;build\generated\ksp\release\kotlin;build\generated\ap_generated_sources\release\out;build\generated\source\buildConfig\release"
       generatedResourceFolders="build\generated\res\resValues\release"
-      desugaredMethodsFiles="C:\Users\vek\.gradle\caches\9.2.1\transforms\e89ec4292abf8014fe2f069cc8fa354d\workspace\transformed\D8BackportedDesugaredMethods.txt">
+      desugaredMethodsFiles="C:\Users\vek\.gradle\caches\transforms-4\f5c665f8d6b656cb0eac7f8101c7046a\transformed\D8BackportedDesugaredMethods.txt">
   </artifact>
 </variant>

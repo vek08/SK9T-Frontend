@@ -6,6 +6,7 @@ import android.view.View;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
+import com.k9t.scoreknight.data.local.FavoritesManager;
 import com.k9t.scoreknight.data.remote.api.CricketApiService;
 import com.k9t.scoreknight.data.repository.CricketRepositoryImpl;
 import com.k9t.scoreknight.di.NetworkModule_ProvideCricketApiServiceFactory;
@@ -30,6 +31,7 @@ import dagger.hilt.android.internal.lifecycle.DefaultViewModelFactories_Internal
 import dagger.hilt.android.internal.managers.ActivityRetainedComponentManager_LifecycleModule_ProvideActivityRetainedLifecycleFactory;
 import dagger.hilt.android.internal.managers.SavedStateHandleHolder;
 import dagger.hilt.android.internal.modules.ApplicationContextModule;
+import dagger.hilt.android.internal.modules.ApplicationContextModule_ProvideContextFactory;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.DoubleCheck;
 import dagger.internal.IdentifierNameString;
@@ -65,25 +67,20 @@ public final class DaggerScoreKnightApp_HiltComponents_SingletonC {
     return new Builder();
   }
 
-  public static ScoreKnightApp_HiltComponents.SingletonC create() {
-    return new Builder().build();
-  }
-
   public static final class Builder {
+    private ApplicationContextModule applicationContextModule;
+
     private Builder() {
     }
 
-    /**
-     * @deprecated This module is declared, but an instance is not used in the component. This method is a no-op. For more, see https://dagger.dev/unused-modules.
-     */
-    @Deprecated
     public Builder applicationContextModule(ApplicationContextModule applicationContextModule) {
-      Preconditions.checkNotNull(applicationContextModule);
+      this.applicationContextModule = Preconditions.checkNotNull(applicationContextModule);
       return this;
     }
 
     public ScoreKnightApp_HiltComponents.SingletonC build() {
-      return new SingletonCImpl();
+      Preconditions.checkBuilderRequirement(applicationContextModule, ApplicationContextModule.class);
+      return new SingletonCImpl(applicationContextModule);
     }
   }
 
@@ -478,7 +475,7 @@ public final class DaggerScoreKnightApp_HiltComponents_SingletonC {
       public T get() {
         switch (id) {
           case 0: // com.k9t.scoreknight.presentation.home.HomeViewModel 
-          return (T) new HomeViewModel(viewModelCImpl.getHomeMatchesUseCase());
+          return (T) new HomeViewModel(viewModelCImpl.getHomeMatchesUseCase(), singletonCImpl.favoritesManagerProvider.get());
 
           default: throw new AssertionError(id);
         }
@@ -556,6 +553,8 @@ public final class DaggerScoreKnightApp_HiltComponents_SingletonC {
   }
 
   private static final class SingletonCImpl extends ScoreKnightApp_HiltComponents.SingletonC {
+    private final ApplicationContextModule applicationContextModule;
+
     private final SingletonCImpl singletonCImpl = this;
 
     private Provider<OkHttpClient> provideOkHttpClientProvider;
@@ -570,24 +569,27 @@ public final class DaggerScoreKnightApp_HiltComponents_SingletonC {
 
     private Provider<CricketRepository> bindCricketRepositoryProvider;
 
-    private SingletonCImpl() {
+    private Provider<FavoritesManager> favoritesManagerProvider;
 
-      initialize();
+    private SingletonCImpl(ApplicationContextModule applicationContextModuleParam) {
+      this.applicationContextModule = applicationContextModuleParam;
+      initialize(applicationContextModuleParam);
 
     }
 
     @SuppressWarnings("unchecked")
-    private void initialize() {
+    private void initialize(final ApplicationContextModule applicationContextModuleParam) {
       this.provideOkHttpClientProvider = DoubleCheck.provider(new SwitchingProvider<OkHttpClient>(singletonCImpl, 3));
       this.provideJsonProvider = DoubleCheck.provider(new SwitchingProvider<Json>(singletonCImpl, 4));
       this.provideRetrofitProvider = DoubleCheck.provider(new SwitchingProvider<Retrofit>(singletonCImpl, 2));
       this.provideCricketApiServiceProvider = DoubleCheck.provider(new SwitchingProvider<CricketApiService>(singletonCImpl, 1));
       this.cricketRepositoryImplProvider = new SwitchingProvider<>(singletonCImpl, 0);
       this.bindCricketRepositoryProvider = DoubleCheck.provider((Provider) cricketRepositoryImplProvider);
+      this.favoritesManagerProvider = DoubleCheck.provider(new SwitchingProvider<FavoritesManager>(singletonCImpl, 5));
     }
 
     @Override
-    public void injectScoreKnightApp(ScoreKnightApp arg0) {
+    public void injectScoreKnightApp(ScoreKnightApp scoreKnightApp) {
     }
 
     @Override
@@ -633,6 +635,9 @@ public final class DaggerScoreKnightApp_HiltComponents_SingletonC {
 
           case 4: // kotlinx.serialization.json.Json 
           return (T) NetworkModule_ProvideJsonFactory.provideJson();
+
+          case 5: // com.k9t.scoreknight.data.local.FavoritesManager 
+          return (T) new FavoritesManager(ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule));
 
           default: throw new AssertionError(id);
         }

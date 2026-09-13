@@ -49,6 +49,22 @@ C:\Users\vek\Videos\sk9t\frontend\app\build.gradle.kts:66: Warning: A newer vers
    However, you may simply not be aware that a more recent version is
    available, and that is what this lint check helps find.
 
+C:\Users\vek\Videos\sk9t\frontend\app\src\main\java\com\k9t\scoreknight\presentation\components\MatchCard.kt:46: Warning: Modifier parameter should be the first optional parameter [ModifierParameter from androidx.compose.ui]
+    modifier: Modifier = Modifier
+    ~~~~~~~~
+
+   Explanation for issues of type "ModifierParameter":
+   The first (or only) Modifier parameter in a Composable function should
+   follow the following rules:
+   - Be named modifier
+   - Have a type of Modifier
+   - Either have no default value, or have a default value of Modifier
+   - If optional, be the first optional parameter in the parameter list
+
+   Vendor: Jetpack Compose
+   Identifier: androidx.compose.ui
+   Feedback: https://issuetracker.google.com/issues/new?component=612128
+
 C:\Users\vek\Videos\sk9t\frontend\app\src\main\AndroidManifest.xml:8: Warning: Should explicitly set android:icon, there is no default [MissingApplicationIcon]
     <application
      ~~~~~~~~~~~
@@ -60,4 +76,4 @@ C:\Users\vek\Videos\sk9t\frontend\app\src\main\AndroidManifest.xml:8: Warning: S
 
    https://developer.android.com/studio/publish/preparing#publishing-configure
 
-0 errors, 9 warnings
+0 errors, 10 warnings

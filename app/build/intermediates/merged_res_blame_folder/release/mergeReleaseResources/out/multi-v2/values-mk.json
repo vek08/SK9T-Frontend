@@ -4,7 +4,7 @@
             "outputFile": "com.k9t.scoreknight.app-mergeReleaseResources-52:/values-mk/values-mk.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\vek\\.gradle\\caches\\9.2.1\\transforms\\a315c9e1a1f553f4f7f670f209f4a276\\workspace\\transformed\\ui-release\\res\\values-mk\\values-mk.xml",
+                    "source": "C:\\Users\\vek\\.gradle\\caches\\transforms-4\\718639e51949a654dfa78bda07565d2e\\transformed\\ui-release\\res\\values-mk\\values-mk.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\vek\\.gradle\\caches\\9.2.1\\transforms\\33044a1160eb9f3073ca4a38b38c3663\\workspace\\transformed\\material3-release\\res\\values-mk\\values-mk.xml",
+                    "source": "C:\\Users\\vek\\.gradle\\caches\\transforms-4\\12148c3a3790c0e78234b71bcb2b9988\\transformed\\material3-release\\res\\values-mk\\values-mk.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -38,7 +38,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\vek\\.gradle\\caches\\9.2.1\\transforms\\d63e953b45e22c8afd8e572ab725b812\\workspace\\transformed\\foundation-release\\res\\values-mk\\values-mk.xml",
+                    "source": "C:\\Users\\vek\\.gradle\\caches\\transforms-4\\29f4a20988ac263a569a05d41fc0e1d1\\transformed\\foundation-release\\res\\values-mk\\values-mk.xml",
                     "from": {
                         "startLines": "2,3",
                         "startColumns": "4,4",
@@ -55,7 +55,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\vek\\.gradle\\caches\\9.2.1\\transforms\\490f83673d5376bb8e138af97f7920f5\\workspace\\transformed\\core-1.13.1\\res\\values-mk\\values-mk.xml",
+                    "source": "C:\\Users\\vek\\.gradle\\caches\\transforms-4\\b4fa61e3858af4ff8bfbcc9342057997\\transformed\\core-1.13.1\\res\\values-mk\\values-mk.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",
