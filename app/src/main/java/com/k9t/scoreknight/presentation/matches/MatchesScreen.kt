@@ -62,7 +62,8 @@ enum class MatchFilter(val displayName: String) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MatchesScreen(
-    viewModel: HomeViewModel
+    viewModel: HomeViewModel,
+    onNavigateToMatchDetails: (String) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var selectedFilter by remember { mutableStateOf(MatchFilter.ALL) }
@@ -219,7 +220,8 @@ fun MatchesScreen(
                                             MatchCard(
                                                 match = match,
                                                 isFavorite = state.favorites.contains(match.matchId),
-                                                onFavoriteClick = { viewModel.toggleFavorite(match.matchId) }
+                                                onFavoriteClick = { viewModel.toggleFavorite(match.matchId) },
+                                                onClick = { onNavigateToMatchDetails(match.matchId) }
                                             )
                                         }
                                     }

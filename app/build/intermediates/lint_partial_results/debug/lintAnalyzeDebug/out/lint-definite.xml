@@ -7,12 +7,12 @@
         message="Modifier parameter should be the first optional parameter">
         <location
             file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/k9t/scoreknight/presentation/components/MatchCard.kt"
-            line="46"
+            line="47"
             column="5"
-            startOffset="1903"
-            endLine="46"
+            startOffset="1933"
+            endLine="47"
             endColumn="13"
-            endOffset="1911"/>
+            endOffset="1941"/>
     </incident>
 
     <incident

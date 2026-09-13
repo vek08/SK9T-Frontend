@@ -36,7 +36,8 @@ import com.k9t.scoreknight.presentation.home.HomeViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LiveScreen(
-    viewModel: HomeViewModel
+    viewModel: HomeViewModel,
+    onNavigateToMatchDetails: (String) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val pullToRefreshState = rememberPullToRefreshState()
@@ -106,7 +107,8 @@ fun LiveScreen(
                                 MatchCard(
                                     match = match,
                                     isFavorite = state.favorites.contains(match.matchId),
-                                    onFavoriteClick = { viewModel.toggleFavorite(match.matchId) }
+                                    onFavoriteClick = { viewModel.toggleFavorite(match.matchId) },
+                                    onClick = { onNavigateToMatchDetails(match.matchId) }
                                 )
                             }
                         }

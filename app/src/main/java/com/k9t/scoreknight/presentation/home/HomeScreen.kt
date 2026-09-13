@@ -39,7 +39,8 @@ import com.k9t.scoreknight.presentation.components.MatchCard
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    onNavigateToMatchDetails: (String) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val pullToRefreshState = rememberPullToRefreshState()
@@ -93,7 +94,8 @@ fun HomeScreen(
                     HomeContent(
                         matches = state.matches,
                         favorites = state.favorites,
-                        onFavoriteClick = viewModel::toggleFavorite
+                        onFavoriteClick = viewModel::toggleFavorite,
+                        onNavigateToMatchDetails = onNavigateToMatchDetails
                     )
                 }
                 is HomeUiState.Error -> {
@@ -121,7 +123,8 @@ fun HomeScreen(
 private fun HomeContent(
     matches: List<CricketMatch>,
     favorites: Set<String>,
-    onFavoriteClick: (String) -> Unit
+    onFavoriteClick: (String) -> Unit,
+    onNavigateToMatchDetails: (String) -> Unit
 ) {
     val liveMatches = matches.filter { it.status.lowercase().contains("live") || it.status.lowercase().contains("inning") }
     val upcomingMatches = matches.filter { it.status.lowercase().contains("upcoming") || it.status.lowercase().contains("yet to begin") }
@@ -142,7 +145,8 @@ private fun HomeContent(
                         MatchCard(
                             match = match,
                             isFavorite = favorites.contains(match.matchId),
-                            onFavoriteClick = { onFavoriteClick(match.matchId) }
+                            onFavoriteClick = { onFavoriteClick(match.matchId) },
+                            onClick = { onNavigateToMatchDetails(match.matchId) }
                         )
                     }
                 )
@@ -163,7 +167,8 @@ private fun HomeContent(
                         MatchCard(
                             match = match,
                             isFavorite = favorites.contains(match.matchId),
-                            onFavoriteClick = { onFavoriteClick(match.matchId) }
+                            onFavoriteClick = { onFavoriteClick(match.matchId) },
+                            onClick = { onNavigateToMatchDetails(match.matchId) }
                         )
                     }
                 )
@@ -184,7 +189,8 @@ private fun HomeContent(
                         MatchCard(
                             match = match,
                             isFavorite = favorites.contains(match.matchId),
-                            onFavoriteClick = { onFavoriteClick(match.matchId) }
+                            onFavoriteClick = { onFavoriteClick(match.matchId) },
+                            onClick = { onNavigateToMatchDetails(match.matchId) }
                         )
                     }
                 )

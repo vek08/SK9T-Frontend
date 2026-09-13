@@ -18,7 +18,10 @@ import com.k9t.scoreknight.presentation.home.HomeScreen
 import com.k9t.scoreknight.presentation.home.HomeViewModel
 import com.k9t.scoreknight.presentation.live.LiveScreen
 import com.k9t.scoreknight.presentation.matches.MatchesScreen
+import com.k9t.scoreknight.presentation.matchdetails.MatchDetailsScreen
 import com.k9t.scoreknight.presentation.profile.ProfileScreen
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 
 @Composable
 fun AppNavigation() {
@@ -31,7 +34,9 @@ fun AppNavigation() {
 
     Scaffold(
         bottomBar = {
-            ScoreKnightBottomBar(
+            val shouldShowBottomBar = currentRoute in BottomTab.values().map { it.route }
+            if (shouldShowBottomBar) {
+                ScoreKnightBottomBar(
                 currentRoute = currentRoute,
                 onNavigate = { tab ->
                     navController.navigate(tab.route) {
@@ -43,6 +48,7 @@ fun AppNavigation() {
                     }
                 }
             )
+            }
         }
     ) { paddingValues ->
         Box(modifier = Modifier.padding(paddingValues)) {
@@ -51,19 +57,42 @@ fun AppNavigation() {
                 startDestination = BottomTab.HOME.route
             ) {
                 composable(BottomTab.HOME.route) {
-                    HomeScreen(viewModel = sharedViewModel)
+                    HomeScreen(
+                        viewModel = sharedViewModel,
+                        onNavigateToMatchDetails = { matchId -> navController.navigate("match/$matchId") }
+                    )
                 }
                 composable(BottomTab.LIVE.route) {
-                    LiveScreen(viewModel = sharedViewModel)
+                    LiveScreen(
+                        viewModel = sharedViewModel,
+                        onNavigateToMatchDetails = { matchId -> navController.navigate("match/$matchId") }
+                    )
                 }
                 composable(BottomTab.MATCHES.route) {
-                    MatchesScreen(viewModel = sharedViewModel)
+                    MatchesScreen(
+                        viewModel = sharedViewModel,
+                        onNavigateToMatchDetails = { matchId -> navController.navigate("match/$matchId") }
+                    )
                 }
                 composable(BottomTab.FAVORITES.route) {
-                    FavoritesScreen(viewModel = sharedViewModel)
+                    FavoritesScreen(
+                        viewModel = sharedViewModel,
+                        onNavigateToMatchDetails = { matchId -> navController.navigate("match/$matchId") }
+                    )
                 }
                 composable(BottomTab.PROFILE.route) {
                     ProfileScreen()
+                }
+                composable(
+                    route = "match/{matchId}",
+                    arguments = listOf(navArgument("matchId") { type = NavType.StringType })
+                ) { backStackEntry ->
+                    val matchId = backStackEntry.arguments?.getString("matchId") ?: return@composable
+                    MatchDetailsScreen(
+                        matchId = matchId,
+                        viewModel = sharedViewModel,
+                        onBackClick = { navController.popBackStack() }
+                    )
                 }
             }
         }
