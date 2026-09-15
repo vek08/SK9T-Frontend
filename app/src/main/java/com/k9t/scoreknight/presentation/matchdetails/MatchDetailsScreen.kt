@@ -61,8 +61,6 @@ import com.k9t.scoreknight.domain.model.CricketMatch
 import com.k9t.scoreknight.presentation.components.EmptyState
 import com.k9t.scoreknight.presentation.components.ErrorState
 import com.k9t.scoreknight.presentation.components.LoadingState
-import com.k9t.scoreknight.presentation.home.HomeUiState
-import com.k9t.scoreknight.presentation.home.HomeViewModel
 
 enum class MatchTab(val title: String) {
     INFO("INFO"),
@@ -76,8 +74,7 @@ enum class MatchTab(val title: String) {
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun MatchDetailsScreen(
-    matchId: String,
-    viewModel: HomeViewModel,
+    viewModel: MatchDetailsViewModel,
     onBackClick: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -85,17 +82,12 @@ fun MatchDetailsScreen(
     val coroutineScope = rememberCoroutineScope()
 
     when (val state = uiState) {
-        is HomeUiState.Loading -> {
+        is MatchDetailsUiState.Loading -> {
             LoadingState()
         }
-        is HomeUiState.Success -> {
-            val match = state.matches.find { it.matchId == matchId }
-            if (match == null) {
-                ErrorState(message = "Match details not found.", onRetry = onBackClick)
-                return
-            }
-
-            val isFavorite = state.favorites.contains(match.matchId)
+        is MatchDetailsUiState.Success -> {
+            val match = state.match
+            val isFavorite = state.isFavorite
 
             Scaffold(
                 topBar = {
@@ -197,7 +189,7 @@ fun MatchDetailsScreen(
                                     MatchTab.INFO -> MatchInfoTab(match = match)
                                     MatchTab.LIVE -> MatchLiveTab(match = match)
                                     MatchTab.SCORECARD -> UnavailableTabState("Scorecard not available", "Detailed scorecard data is not provided by the current API.")
-                                    MatchTab.SQUADS -> UnavailableTabState("Squads not available", "Player squads are not provided by the current API.")
+                                    MatchTab.SQUADS -> MatchSquadsTab(match = match)
                                     MatchTab.OVERS -> UnavailableTabState("Overs data not available", "Ball-by-ball data is not provided by the current API.")
                                     MatchTab.HIGHLIGHTS -> UnavailableTabState("Highlights not available", "Match highlights are not provided by the current API.")
                                 }
@@ -207,14 +199,11 @@ fun MatchDetailsScreen(
                 }
             }
         }
-        is HomeUiState.Error -> {
+        is MatchDetailsUiState.Error -> {
             ErrorState(
                 message = state.message,
-                onRetry = { viewModel.loadMatches() }
+                onRetry = { viewModel.loadMatch() }
             )
-        }
-        is HomeUiState.Empty -> {
-            ErrorState(message = "Match not found", onRetry = onBackClick)
         }
     }
 }
@@ -443,3 +432,73 @@ private fun UnavailableTabState(title: String, subtitle: String) {
         }
     }
 }
+
+@Composable
+private fun MatchSquadsTab(match: CricketMatch) {
+    if (match.squads.isNullOrEmpty()) {
+        UnavailableTabState("Squads not available", "Player squads are not provided by the current API or are not announced yet.")
+        return
+    }
+
+    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+        match.squads.forEach { squad ->
+            InfoSectionTitle(squad.teamName)
+            Card(
+                modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f))
+            ) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    squad.players.forEachIndexed { index, player ->
+                        Row(
+                            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(40.dp)
+                                    .clip(CircleShape)
+                                    .background(MaterialTheme.colorScheme.surface)
+                            ) {
+                                if (player.playerImg != null) {
+                                    AsyncImage(
+                                        model = player.playerImg,
+                                        contentDescription = "${player.name} image",
+                                        contentScale = ContentScale.Crop,
+                                        modifier = Modifier.fillMaxSize()
+                                    )
+                                } else {
+                                    Icon(
+                                        imageVector = Icons.Default.MoreVert,
+                                        contentDescription = null,
+                                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        modifier = Modifier.align(Alignment.Center)
+                                    )
+                                }
+                            }
+                            Spacer(modifier = Modifier.width(12.dp))
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(
+                                    text = player.name,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
+                                if (player.role.isNotBlank()) {
+                                    Text(
+                                        text = player.role,
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                }
+                            }
+                        }
+                        if (index < squad.players.size - 1) {
+                            HorizontalDivider(color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+

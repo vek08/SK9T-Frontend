@@ -44,8 +44,8 @@ import androidx.compose.ui.unit.dp
 
 enum class BottomTab(val title: String, val icon: ImageVector, val route: String) {
     HOME("Home", Icons.Rounded.Home, "home"),
-    LIVE("Live", Icons.Rounded.PlayArrow, "live"),
     MATCHES("Matches", Icons.Rounded.List, "matches"),
+    LIVE("Live", Icons.Rounded.PlayArrow, "live"),
     FAVORITES("Favorites", Icons.Rounded.Favorite, "favorites"),
     PROFILE("Profile", Icons.Rounded.Person, "profile")
 }
@@ -105,12 +105,12 @@ private fun BottomTabItem(
                 indication = null,
                 onClick = onClick
             )
-            .padding(8.dp)
-            .scale(scale),
+            .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(
             modifier = Modifier
+                .scale(scale)
                 .size(40.dp)
                 .clip(CircleShape)
                 .background(

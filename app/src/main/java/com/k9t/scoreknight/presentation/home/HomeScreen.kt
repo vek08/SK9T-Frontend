@@ -92,7 +92,9 @@ fun HomeScreen(
                 }
                 is HomeUiState.Success -> {
                     HomeContent(
-                        matches = state.matches,
+                        liveMatches = state.liveMatches,
+                        upcomingMatches = state.upcomingMatches,
+                        completedMatches = state.completedMatches,
                         favorites = state.favorites,
                         onFavoriteClick = viewModel::toggleFavorite,
                         onNavigateToMatchDetails = onNavigateToMatchDetails
@@ -121,14 +123,13 @@ fun HomeScreen(
 
 @Composable
 private fun HomeContent(
-    matches: List<CricketMatch>,
+    liveMatches: List<CricketMatch>,
+    upcomingMatches: List<CricketMatch>,
+    completedMatches: List<CricketMatch>,
     favorites: Set<String>,
     onFavoriteClick: (String) -> Unit,
     onNavigateToMatchDetails: (String) -> Unit
 ) {
-    val liveMatches = matches.filter { it.status.lowercase().contains("live") || it.status.lowercase().contains("inning") }
-    val upcomingMatches = matches.filter { it.status.lowercase().contains("upcoming") || it.status.lowercase().contains("yet to begin") }
-    val completedMatches = matches.filterNot { liveMatches.contains(it) || upcomingMatches.contains(it) }
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),

@@ -3,6 +3,7 @@ package com.k9t.scoreknight;
 import com.k9t.scoreknight.di.NetworkModule;
 import com.k9t.scoreknight.di.RepositoryModule;
 import com.k9t.scoreknight.presentation.home.HomeViewModel_HiltModules;
+import com.k9t.scoreknight.presentation.matchdetails.MatchDetailsViewModel_HiltModules;
 import dagger.Binds;
 import dagger.Component;
 import dagger.Module;
@@ -158,6 +159,7 @@ public final class ScoreKnightApp_HiltComponents {
           HiltWrapper_ActivityRetainedComponentManager_LifecycleModule.class,
           HiltWrapper_SavedStateHandleModule.class,
           HomeViewModel_HiltModules.KeyModule.class,
+          MatchDetailsViewModel_HiltModules.KeyModule.class,
           ActivityCBuilderModule.class,
           ViewModelCBuilderModule.class
       }
@@ -196,7 +198,8 @@ public final class ScoreKnightApp_HiltComponents {
   @Subcomponent(
       modules = {
           HiltWrapper_HiltViewModelFactory_ViewModelModule.class,
-          HomeViewModel_HiltModules.BindsModule.class
+          HomeViewModel_HiltModules.BindsModule.class,
+          MatchDetailsViewModel_HiltModules.BindsModule.class
       }
   )
   @ViewModelScoped

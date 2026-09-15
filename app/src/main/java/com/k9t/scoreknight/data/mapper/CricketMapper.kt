@@ -18,7 +18,24 @@ fun CricketMatchDto.toDomain(): CricketMatch {
         score = scoreString,
         parsedScores = parsedScoresList,
         venue = venue ?: "Venue Unavailable",
-        matchDate = matchDate ?: ""
+        matchDate = matchDate ?: "",
+        squads = squads?.map { squadDto ->
+            com.k9t.scoreknight.domain.model.MatchSquad(
+                teamName = squadDto.teamName ?: "Unknown Team",
+                img = squadDto.img,
+                players = squadDto.players?.map { playerDto ->
+                    com.k9t.scoreknight.domain.model.MatchPlayer(
+                        id = playerDto.id ?: "",
+                        name = playerDto.name ?: "Unknown Player",
+                        role = playerDto.role ?: "",
+                        battingStyle = playerDto.battingStyle ?: "",
+                        bowlingStyle = playerDto.bowlingStyle ?: "",
+                        country = playerDto.country ?: "",
+                        playerImg = playerDto.playerImg
+                    )
+                } ?: emptyList()
+            )
+        }
     )
 }
 
@@ -73,3 +90,4 @@ private fun parseScoreData(scoreJson: String?): Pair<String?, List<InningScore>?
         }
     }
 }
+

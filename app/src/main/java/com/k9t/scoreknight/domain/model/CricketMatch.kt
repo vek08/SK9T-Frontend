@@ -13,7 +13,8 @@ data class CricketMatch(
     val teamBLogo: String?,
     val status: String,
     val score: String?, // Retained for backwards compatibility if needed
-    val parsedScores: List<InningScore>? = null,
+    val parsedScores: List<InningScore>?,
     val venue: String,
-    val matchDate: String
+    val matchDate: String,
+    val squads: List<MatchSquad>? = null
 )

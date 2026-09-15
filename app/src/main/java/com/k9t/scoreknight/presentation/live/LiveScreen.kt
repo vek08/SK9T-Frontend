@@ -88,9 +88,7 @@ fun LiveScreen(
                     LoadingState()
                 }
                 is HomeUiState.Success -> {
-                    val liveMatches = state.matches.filter { 
-                        it.status.lowercase().contains("live") || it.status.lowercase().contains("inning") 
-                    }
+                    val liveMatches = state.liveMatches
                     
                     if (liveMatches.isEmpty()) {
                         EmptyState(
@@ -101,7 +99,8 @@ fun LiveScreen(
                         LazyColumn(
                             modifier = Modifier.fillMaxSize(),
                             contentPadding = PaddingValues(16.dp),
-                            verticalArrangement = Arrangement.spacedBy(16.dp)
+                            verticalArrangement = Arrangement.spacedBy(16.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             items(items = liveMatches, key = { it.matchId }) { match ->
                                 MatchCard(

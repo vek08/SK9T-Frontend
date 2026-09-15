@@ -17,6 +17,8 @@ import com.k9t.scoreknight.domain.repository.CricketRepository;
 import com.k9t.scoreknight.domain.usecase.GetHomeMatchesUseCase;
 import com.k9t.scoreknight.presentation.home.HomeViewModel;
 import com.k9t.scoreknight.presentation.home.HomeViewModel_HiltModules;
+import com.k9t.scoreknight.presentation.matchdetails.MatchDetailsViewModel;
+import com.k9t.scoreknight.presentation.matchdetails.MatchDetailsViewModel_HiltModules;
 import dagger.hilt.android.ActivityRetainedLifecycle;
 import dagger.hilt.android.ViewModelLifecycle;
 import dagger.hilt.android.internal.builders.ActivityComponentBuilder;
@@ -37,6 +39,7 @@ import dagger.internal.DoubleCheck;
 import dagger.internal.IdentifierNameString;
 import dagger.internal.KeepFieldType;
 import dagger.internal.LazyClassKeyMap;
+import dagger.internal.MapBuilder;
 import dagger.internal.Preconditions;
 import dagger.internal.Provider;
 import java.util.Collections;
@@ -379,7 +382,7 @@ public final class DaggerScoreKnightApp_HiltComponents_SingletonC {
 
     @Override
     public Map<Class<?>, Boolean> getViewModelKeys() {
-      return LazyClassKeyMap.<Boolean>of(Collections.<String, Boolean>singletonMap(LazyClassKeyProvider.com_k9t_scoreknight_presentation_home_HomeViewModel, HomeViewModel_HiltModules.KeyModule.provide()));
+      return LazyClassKeyMap.<Boolean>of(MapBuilder.<String, Boolean>newMapBuilder(2).put(LazyClassKeyProvider.com_k9t_scoreknight_presentation_home_HomeViewModel, HomeViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_k9t_scoreknight_presentation_matchdetails_MatchDetailsViewModel, MatchDetailsViewModel_HiltModules.KeyModule.provide()).build());
     }
 
     @Override
@@ -401,12 +404,19 @@ public final class DaggerScoreKnightApp_HiltComponents_SingletonC {
     private static final class LazyClassKeyProvider {
       static String com_k9t_scoreknight_presentation_home_HomeViewModel = "com.k9t.scoreknight.presentation.home.HomeViewModel";
 
+      static String com_k9t_scoreknight_presentation_matchdetails_MatchDetailsViewModel = "com.k9t.scoreknight.presentation.matchdetails.MatchDetailsViewModel";
+
       @KeepFieldType
       HomeViewModel com_k9t_scoreknight_presentation_home_HomeViewModel2;
+
+      @KeepFieldType
+      MatchDetailsViewModel com_k9t_scoreknight_presentation_matchdetails_MatchDetailsViewModel2;
     }
   }
 
   private static final class ViewModelCImpl extends ScoreKnightApp_HiltComponents.ViewModelC {
+    private final SavedStateHandle savedStateHandle;
+
     private final SingletonCImpl singletonCImpl;
 
     private final ActivityRetainedCImpl activityRetainedCImpl;
@@ -415,12 +425,14 @@ public final class DaggerScoreKnightApp_HiltComponents_SingletonC {
 
     private Provider<HomeViewModel> homeViewModelProvider;
 
+    private Provider<MatchDetailsViewModel> matchDetailsViewModelProvider;
+
     private ViewModelCImpl(SingletonCImpl singletonCImpl,
         ActivityRetainedCImpl activityRetainedCImpl, SavedStateHandle savedStateHandleParam,
         ViewModelLifecycle viewModelLifecycleParam) {
       this.singletonCImpl = singletonCImpl;
       this.activityRetainedCImpl = activityRetainedCImpl;
-
+      this.savedStateHandle = savedStateHandleParam;
       initialize(savedStateHandleParam, viewModelLifecycleParam);
 
     }
@@ -433,11 +445,12 @@ public final class DaggerScoreKnightApp_HiltComponents_SingletonC {
     private void initialize(final SavedStateHandle savedStateHandleParam,
         final ViewModelLifecycle viewModelLifecycleParam) {
       this.homeViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 0);
+      this.matchDetailsViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 1);
     }
 
     @Override
     public Map<Class<?>, javax.inject.Provider<ViewModel>> getHiltViewModelMap() {
-      return LazyClassKeyMap.<javax.inject.Provider<ViewModel>>of(Collections.<String, javax.inject.Provider<ViewModel>>singletonMap(LazyClassKeyProvider.com_k9t_scoreknight_presentation_home_HomeViewModel, ((Provider) homeViewModelProvider)));
+      return LazyClassKeyMap.<javax.inject.Provider<ViewModel>>of(MapBuilder.<String, javax.inject.Provider<ViewModel>>newMapBuilder(2).put(LazyClassKeyProvider.com_k9t_scoreknight_presentation_home_HomeViewModel, ((Provider) homeViewModelProvider)).put(LazyClassKeyProvider.com_k9t_scoreknight_presentation_matchdetails_MatchDetailsViewModel, ((Provider) matchDetailsViewModelProvider)).build());
     }
 
     @Override
@@ -447,7 +460,12 @@ public final class DaggerScoreKnightApp_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
+      static String com_k9t_scoreknight_presentation_matchdetails_MatchDetailsViewModel = "com.k9t.scoreknight.presentation.matchdetails.MatchDetailsViewModel";
+
       static String com_k9t_scoreknight_presentation_home_HomeViewModel = "com.k9t.scoreknight.presentation.home.HomeViewModel";
+
+      @KeepFieldType
+      MatchDetailsViewModel com_k9t_scoreknight_presentation_matchdetails_MatchDetailsViewModel2;
 
       @KeepFieldType
       HomeViewModel com_k9t_scoreknight_presentation_home_HomeViewModel2;
@@ -476,6 +494,9 @@ public final class DaggerScoreKnightApp_HiltComponents_SingletonC {
         switch (id) {
           case 0: // com.k9t.scoreknight.presentation.home.HomeViewModel 
           return (T) new HomeViewModel(viewModelCImpl.getHomeMatchesUseCase(), singletonCImpl.favoritesManagerProvider.get());
+
+          case 1: // com.k9t.scoreknight.presentation.matchdetails.MatchDetailsViewModel 
+          return (T) new MatchDetailsViewModel(singletonCImpl.bindCricketRepositoryProvider.get(), singletonCImpl.favoritesManagerProvider.get(), viewModelCImpl.savedStateHandle);
 
           default: throw new AssertionError(id);
         }

@@ -23,23 +23,22 @@ import javax.inject.Provider;
     "cast"
 })
 public final class CricketRepositoryImpl_Factory implements Factory<CricketRepositoryImpl> {
-  private final Provider<CricketApiService> apiServiceProvider;
+  private final Provider<CricketApiService> apiProvider;
 
-  public CricketRepositoryImpl_Factory(Provider<CricketApiService> apiServiceProvider) {
-    this.apiServiceProvider = apiServiceProvider;
+  public CricketRepositoryImpl_Factory(Provider<CricketApiService> apiProvider) {
+    this.apiProvider = apiProvider;
   }
 
   @Override
   public CricketRepositoryImpl get() {
-    return newInstance(apiServiceProvider.get());
+    return newInstance(apiProvider.get());
   }
 
-  public static CricketRepositoryImpl_Factory create(
-      Provider<CricketApiService> apiServiceProvider) {
-    return new CricketRepositoryImpl_Factory(apiServiceProvider);
+  public static CricketRepositoryImpl_Factory create(Provider<CricketApiService> apiProvider) {
+    return new CricketRepositoryImpl_Factory(apiProvider);
   }
 
-  public static CricketRepositoryImpl newInstance(CricketApiService apiService) {
-    return new CricketRepositoryImpl(apiService);
+  public static CricketRepositoryImpl newInstance(CricketApiService api) {
+    return new CricketRepositoryImpl(api);
   }
 }

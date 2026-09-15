@@ -3,6 +3,7 @@ package com.k9t.scoreknight.presentation.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.k9t.scoreknight.data.local.FavoritesManager
+import com.k9t.scoreknight.domain.model.CricketMatch
 import com.k9t.scoreknight.domain.usecase.GetHomeMatchesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,7 +22,7 @@ class HomeViewModel @Inject constructor(
 
     private val _isLoading = MutableStateFlow(true)
     private val _isRefreshing = MutableStateFlow(false)
-    private val _matchesResult = MutableStateFlow<Result<List<com.k9t.scoreknight.domain.model.CricketMatch>>?>(null)
+    private val _matchesResult = MutableStateFlow<Result<Map<String, List<CricketMatch>>>?>(null)
 
     val uiState: StateFlow<HomeUiState> = combine(
         _isLoading,
@@ -34,12 +35,20 @@ class HomeViewModel @Inject constructor(
         }
         
         result?.fold(
-            onSuccess = { matches ->
-                if (matches.isEmpty()) {
+            onSuccess = { matchesMap ->
+                val live = matchesMap["live"] ?: emptyList()
+                val upcoming = matchesMap["upcoming"] ?: emptyList()
+                val completed = matchesMap["completed"] ?: emptyList()
+                val allMatches = live + upcoming + completed
+                
+                if (allMatches.isEmpty()) {
                     HomeUiState.Empty
                 } else {
                     HomeUiState.Success(
-                        matches = matches,
+                        matches = allMatches,
+                        liveMatches = live,
+                        upcomingMatches = upcoming,
+                        completedMatches = completed,
                         favorites = favorites,
                         isRefreshing = isRefreshing
                     )
@@ -79,3 +88,4 @@ class HomeViewModel @Inject constructor(
         favoritesManager.toggleFavorite(matchId)
     }
 }
+

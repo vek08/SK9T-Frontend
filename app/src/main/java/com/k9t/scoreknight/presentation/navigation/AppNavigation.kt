@@ -87,10 +87,9 @@ fun AppNavigation() {
                     route = "match/{matchId}",
                     arguments = listOf(navArgument("matchId") { type = NavType.StringType })
                 ) { backStackEntry ->
-                    val matchId = backStackEntry.arguments?.getString("matchId") ?: return@composable
+                    val matchDetailsViewModel: com.k9t.scoreknight.presentation.matchdetails.MatchDetailsViewModel = hiltViewModel()
                     MatchDetailsScreen(
-                        matchId = matchId,
-                        viewModel = sharedViewModel,
+                        viewModel = matchDetailsViewModel,
                         onBackClick = { navController.popBackStack() }
                     )
                 }

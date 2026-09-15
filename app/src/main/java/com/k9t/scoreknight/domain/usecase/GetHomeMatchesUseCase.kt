@@ -7,7 +7,8 @@ import javax.inject.Inject
 class GetHomeMatchesUseCase @Inject constructor(
     private val repository: CricketRepository
 ) {
-    suspend operator fun invoke(): Result<List<CricketMatch>> {
+    suspend operator fun invoke(): Result<Map<String, List<CricketMatch>>> {
         return repository.getHomeMatches()
     }
 }
+
