@@ -133,24 +133,24 @@ private fun HomeContent(
                 listOf(
                     com.k9t.scoreknight.domain.model.CricketBanner(
                         id = "1",
-                        backgroundUrl = null,
-                        playerImageUrl = null,
+                        backgroundUrl = "https://res.cloudinary.com/dwmsjuuox/image/upload/v1789896012/virat_xxjatv.jpg",
+                        playerImageUrl = "https://res.cloudinary.com/dwmsjuuox/image/upload/v1789895545/18_ngfscw.webp",
                         playerName = "Virat Kohli",
                         tagline = "The Run Machine",
                         destination = "player_profile/kohli"
                     ),
                     com.k9t.scoreknight.domain.model.CricketBanner(
                         id = "2",
-                        backgroundUrl = null,
-                        playerImageUrl = null,
+                        backgroundUrl = "https://res.cloudinary.com/dwmsjuuox/image/upload/v1789896012/ms_ysvx2v.jpg",
+                        playerImageUrl = "https://res.cloudinary.com/dwmsjuuox/image/upload/v1789895546/7_wk6yfs.jpg",
                         playerName = "MS Dhoni",
                         tagline = "Captain Cool",
                         destination = "player_profile/dhoni"
                     ),
                     com.k9t.scoreknight.domain.model.CricketBanner(
                         id = "3",
-                        backgroundUrl = null,
-                        playerImageUrl = null,
+                        backgroundUrl = "https://res.cloudinary.com/dwmsjuuox/image/upload/v1789896012/rohit_o9sd11.jpg",
+                        playerImageUrl = "https://res.cloudinary.com/dwmsjuuox/image/upload/v1789895545/45_nc6wfh.webp",
                         playerName = "Rohit Sharma",
                         tagline = "Hitman",
                         destination = "player_profile/rohit"
