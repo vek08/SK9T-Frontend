@@ -135,124 +135,77 @@ private fun BannerCard(
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             
-            // Subtle action background (Left)
+            // 1. Background image -> fill entire banner
             AsyncImage(
                 model = banner.backgroundUrl,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .fillMaxWidth(0.6f)
-                    .align(Alignment.CenterStart)
+                modifier = Modifier.fillMaxSize()
             )
 
-            // Gradient to fade the action background into the dark navy
+            // Gradient to fade the action background so text is readable
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(
                         Brush.horizontalGradient(
                             colors = listOf(
-                                Color(0xFF040B16).copy(alpha = 0.2f),
-                                Color(0xFF040B16).copy(alpha = 0.8f),
-                                Color(0xFF040B16)
-                            ),
-                            startX = 0f,
-                            endX = Float.POSITIVE_INFINITY
-                        )
-                    )
-            )
-
-            // Enlarged subtle portrait behind the main player (Right)
-            AsyncImage(
-                model = banner.playerImageUrl,
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                alpha = 0.15f,
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .fillMaxWidth(0.6f)
-                    .align(Alignment.CenterEnd)
-                    .offset(x = 24.dp, y = 16.dp)
-            )
-
-            // Dark cinematic overlay over the subtle portrait to blend it
-            Box(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .fillMaxWidth(0.6f)
-                    .align(Alignment.CenterEnd)
-                    .background(
-                        Brush.horizontalGradient(
-                            colors = listOf(
-                                Color(0xFF040B16),
+                                Color(0xFF040B16).copy(alpha = 0.9f),
+                                Color(0xFF040B16).copy(alpha = 0.5f),
                                 Color.Transparent
                             )
                         )
                     )
             )
 
-            // Content Row (Text Left/Center, Main Image Right)
-            Row(
-                modifier = Modifier.fillMaxSize(),
-                verticalAlignment = Alignment.CenterVertically
+
+
+            // 3. Text/content -> overlay where required
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(0.6f)
+                    .align(Alignment.CenterStart)
+                    .padding(start = 24.dp, end = 8.dp, top = 16.dp, bottom = 16.dp),
+                verticalArrangement = Arrangement.Center
             ) {
-                // Text content
-                Column(
-                    modifier = Modifier
-                        .weight(1.3f)
-                        .padding(start = 24.dp, end = 8.dp, top = 16.dp, bottom = 16.dp),
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    val parts = banner.playerName.split(" ")
-                    val firstName = parts.firstOrNull() ?: ""
-                    val lastName = parts.drop(1).joinToString(" ")
-                    
-                    if (firstName.isNotEmpty() && lastName.isNotEmpty()) {
-                        Text(
-                            text = firstName.uppercase(),
-                            style = MaterialTheme.typography.titleLarge,
-                            color = Color.White.copy(alpha = 0.9f),
-                            fontWeight = FontWeight.Medium,
-                            letterSpacing = 1.sp
-                        )
-                        Text(
-                            text = lastName.uppercase(),
-                            style = MaterialTheme.typography.headlineMedium,
-                            color = Color.White,
-                            fontWeight = FontWeight.Black,
-                            letterSpacing = 1.5.sp
-                        )
-                    } else if (firstName.isNotEmpty() && lastName.isEmpty()){
-                         Text(
-                            text = firstName.uppercase(),
-                            style = MaterialTheme.typography.headlineMedium,
-                            color = Color.White,
-                            fontWeight = FontWeight.Black,
-                            letterSpacing = 1.5.sp
-                        )
-                    }
-                    
-                    Spacer(modifier = Modifier.height(8.dp))
-                    
+                val parts = banner.playerName.split(" ")
+                val firstName = parts.firstOrNull() ?: ""
+                val lastName = parts.drop(1).joinToString(" ")
+                
+                if (firstName.isNotEmpty() && lastName.isNotEmpty()) {
                     Text(
-                        text = banner.tagline.uppercase(),
-                        style = MaterialTheme.typography.labelLarge,
-                        color = Color(0xFF38BDF8),
-                        fontWeight = FontWeight.Bold,
-                        letterSpacing = 0.5.sp
+                        text = firstName.uppercase(),
+                        style = MaterialTheme.typography.titleLarge,
+                        color = Color.White.copy(alpha = 0.9f),
+                        fontWeight = FontWeight.Medium,
+                        letterSpacing = 1.sp
+                    )
+                    Text(
+                        text = lastName.uppercase(),
+                        style = MaterialTheme.typography.headlineMedium,
+                        color = Color.White,
+                        fontWeight = FontWeight.Black,
+                        letterSpacing = 1.5.sp
+                    )
+                } else if (firstName.isNotEmpty() && lastName.isEmpty()){
+                     Text(
+                        text = firstName.uppercase(),
+                        style = MaterialTheme.typography.headlineMedium,
+                        color = Color.White,
+                        fontWeight = FontWeight.Black,
+                        letterSpacing = 1.5.sp
                     )
                 }
                 
-                // Main Player Portrait (Foreground Right)
-                AsyncImage(
-                    model = banner.playerImageUrl,
-                    contentDescription = banner.playerName,
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight()
-                        .padding(end = 16.dp, top = 16.dp)
+                Spacer(modifier = Modifier.height(8.dp))
+                
+                Text(
+                    text = banner.tagline.uppercase(),
+                    style = MaterialTheme.typography.labelLarge,
+                    color = Color(0xFF38BDF8),
+                    fontWeight = FontWeight.Bold,
+                    letterSpacing = 0.5.sp
                 )
             }
             
@@ -269,4 +222,5 @@ private fun BannerCard(
         }
     }
 }
+
 
