@@ -183,11 +183,12 @@ fun MatchesScreen(
                             
                             if (selectedCategory != "All") {
                                 filteredMatches = filteredMatches.filter { match ->
-                                    val allText = "${match.teamA} ${match.teamB} ${match.venue} ${match.status}".lowercase()
+                                    val allText = "${match.teamA} ${match.teamB} ${match.venue} ${match.status} ${match.matchType ?: ""}".lowercase()
                                     when (selectedCategory) {
                                         "Women's" -> allText.contains("women")
-                                        "Domestic", "League" -> !allText.contains("international") && !allText.contains("test")
-                                        "International" -> allText.contains("test") || allText.contains("odi") || allText.contains("t20i")
+                                        "Domestic" -> allText.contains("domestic") || allText.contains("list a") || allText.contains("first-class")
+                                        "League" -> allText.contains("t20") || allText.contains("league") || allText.contains("hundred")
+                                        "International" -> allText.contains("test") || allText.contains("odi") || allText.contains("t20i") || allText.contains("international")
                                         else -> true
                                     }
                                 }

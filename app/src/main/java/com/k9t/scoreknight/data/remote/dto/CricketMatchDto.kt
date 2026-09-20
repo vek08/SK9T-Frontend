@@ -16,5 +16,6 @@ data class CricketMatchDto(
     val score: String? = null,
     val venue: String? = null,
     val matchDate: String? = null,
+    val matchType: String? = null,
     val squads: List<MatchSquadDto>? = null
 )

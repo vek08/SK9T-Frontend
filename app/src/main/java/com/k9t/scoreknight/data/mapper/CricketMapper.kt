@@ -19,6 +19,7 @@ fun CricketMatchDto.toDomain(): CricketMatch {
         parsedScores = parsedScoresList,
         venue = venue ?: "Venue Unavailable",
         matchDate = matchDate ?: "",
+        matchType = matchType,
         squads = squads?.map { squadDto ->
             com.k9t.scoreknight.domain.model.MatchSquad(
                 teamName = squadDto.teamName ?: "Unknown Team",

@@ -16,5 +16,6 @@ data class CricketMatch(
     val parsedScores: List<InningScore>?,
     val venue: String,
     val matchDate: String,
+    val matchType: String? = null,
     val squads: List<MatchSquad>? = null
 )
