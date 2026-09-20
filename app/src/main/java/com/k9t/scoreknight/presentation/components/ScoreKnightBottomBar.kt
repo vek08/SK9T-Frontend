@@ -1,34 +1,24 @@
 package com.k9t.scoreknight.presentation.components
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBars
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.Home
-import androidx.compose.material.icons.rounded.List
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.PlayArrow
+import androidx.compose.material.icons.automirrored.rounded.List
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -37,14 +27,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 enum class BottomTab(val title: String, val icon: ImageVector, val route: String) {
     HOME("Home", Icons.Rounded.Home, "home"),
-    MATCHES("Matches", Icons.Rounded.List, "matches"),
+    MATCHES("Matches", Icons.AutoMirrored.Rounded.List, "matches"),
     LIVE("Live", Icons.Rounded.PlayArrow, "live"),
     FAVORITES("Favorites", Icons.Rounded.Favorite, "favorites"),
     PROFILE("Profile", Icons.Rounded.Person, "profile")
@@ -53,29 +46,46 @@ enum class BottomTab(val title: String, val icon: ImageVector, val route: String
 @Composable
 fun ScoreKnightBottomBar(
     currentRoute: String,
-    onNavigate: (BottomTab) -> Unit
+    onNavigate: (BottomTab) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    Surface(
-        modifier = Modifier.fillMaxWidth(),
-        color = MaterialTheme.colorScheme.surface,
-        shadowElevation = 8.dp,
-        shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)
+    Box(
+        modifier = modifier.fillMaxWidth(),
+        contentAlignment = Alignment.BottomCenter
     ) {
-        Row(
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .windowInsetsPadding(WindowInsets.navigationBars)
-                .padding(horizontal = 8.dp, vertical = 12.dp),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            BottomTab.values().forEach { tab ->
-                val isSelected = currentRoute == tab.route
-                BottomTabItem(
-                    tab = tab,
-                    isSelected = isSelected,
-                    onClick = { onNavigate(tab) }
+                .shadow(
+                    elevation = 24.dp,
+                    shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp, bottomStart = 0.dp, bottomEnd = 0.dp),
+                    spotColor = Color.Black.copy(alpha = 0.05f),
+                    ambientColor = Color.Black.copy(alpha = 0.02f)
                 )
+                .clip(RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp, bottomStart = 0.dp, bottomEnd = 0.dp))
+                .background(Color.White)
+                .border(
+                    width = 1.dp,
+                    color = Color(0xFFE2E8F0),
+                    shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp, bottomStart = 0.dp, bottomEnd = 0.dp)
+                )
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .windowInsetsPadding(WindowInsets.navigationBars)
+                    .padding(horizontal = 8.dp, vertical = 10.dp),
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                BottomTab.values().forEach { tab ->
+                    val isSelected = currentRoute == tab.route
+                    BottomTabItem(
+                        tab = tab,
+                        isSelected = isSelected,
+                        onClick = { onNavigate(tab) }
+                    )
+                }
             }
         }
     }
@@ -96,6 +106,26 @@ private fun BottomTabItem(
         label = "scale"
     )
 
+    val iconColor by animateColorAsState(
+        targetValue = if (isSelected) Color(0xFF0369A1) else Color(0xFF0F172A).copy(alpha = 0.6f),
+        label = "iconColor"
+    )
+
+    val textColor by animateColorAsState(
+        targetValue = if (isSelected) Color(0xFF0369A1) else Color(0xFF0F172A).copy(alpha = 0.6f),
+        label = "textColor"
+    )
+
+    val bgColor by animateColorAsState(
+        targetValue = if (isSelected) Color(0xFF0369A1).copy(alpha = 0.1f) else Color.Transparent,
+        label = "bgColor"
+    )
+    
+    val borderColor by animateColorAsState(
+        targetValue = if (isSelected) Color(0xFF38BDF8).copy(alpha = 0.3f) else Color.Transparent,
+        label = "borderColor"
+    )
+
     val interactionSource = remember { MutableInteractionSource() }
 
     Column(
@@ -105,25 +135,23 @@ private fun BottomTabItem(
                 indication = null,
                 onClick = onClick
             )
-            .padding(8.dp),
+            .padding(vertical = 4.dp, horizontal = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(
             modifier = Modifier
                 .scale(scale)
-                .size(40.dp)
+                .size(36.dp)
                 .clip(CircleShape)
-                .background(
-                    if (isSelected) MaterialTheme.colorScheme.primaryContainer
-                    else Color.Transparent
-                ),
+                .background(bgColor)
+                .border(1.dp, borderColor, CircleShape),
             contentAlignment = Alignment.Center
         ) {
             Icon(
                 imageVector = tab.icon,
                 contentDescription = tab.title,
-                tint = if (isSelected) MaterialTheme.colorScheme.onPrimaryContainer
-                else MaterialTheme.colorScheme.onSurfaceVariant
+                tint = iconColor,
+                modifier = Modifier.size(22.dp)
             )
         }
         
@@ -132,9 +160,10 @@ private fun BottomTabItem(
         Text(
             text = tab.title,
             style = MaterialTheme.typography.labelSmall,
-            color = if (isSelected) MaterialTheme.colorScheme.primary
-            else MaterialTheme.colorScheme.onSurfaceVariant,
-            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
+            color = textColor,
+            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
+            fontSize = 10.sp
         )
     }
 }
+

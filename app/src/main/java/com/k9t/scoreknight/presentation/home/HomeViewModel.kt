@@ -41,18 +41,14 @@ class HomeViewModel @Inject constructor(
                 val completed = matchesMap["completed"] ?: emptyList()
                 val allMatches = live + upcoming + completed
                 
-                if (allMatches.isEmpty()) {
-                    HomeUiState.Empty
-                } else {
-                    HomeUiState.Success(
-                        matches = allMatches,
-                        liveMatches = live,
-                        upcomingMatches = upcoming,
-                        completedMatches = completed,
-                        favorites = favorites,
-                        isRefreshing = isRefreshing
-                    )
-                }
+                HomeUiState.Success(
+                    matches = allMatches,
+                    liveMatches = live,
+                    upcomingMatches = upcoming,
+                    completedMatches = completed,
+                    favorites = favorites,
+                    isRefreshing = isRefreshing
+                )
             },
             onFailure = { exception ->
                 HomeUiState.Error(exception.message ?: "An unknown error occurred")

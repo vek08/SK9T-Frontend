@@ -1,6 +1,7 @@
 package com.k9t.scoreknight.presentation.navigation
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -32,36 +33,18 @@ fun AppNavigation() {
     // Create a shared ViewModel scoped to the AppNavigation (NavHost parent)
     val sharedViewModel: HomeViewModel = hiltViewModel()
 
-    Scaffold(
-        bottomBar = {
-            val shouldShowBottomBar = currentRoute in BottomTab.values().map { it.route }
-            if (shouldShowBottomBar) {
-                ScoreKnightBottomBar(
-                currentRoute = currentRoute,
-                onNavigate = { tab ->
-                    navController.navigate(tab.route) {
-                        popUpTo(navController.graph.startDestinationId) {
-                            saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                }
-            )
+    Box(modifier = Modifier.fillMaxSize()) {
+        NavHost(
+            navController = navController,
+            startDestination = BottomTab.HOME.route,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            composable(BottomTab.HOME.route) {
+                HomeScreen(
+                    viewModel = sharedViewModel,
+                    onNavigateToMatchDetails = { matchId -> navController.navigate("match/$matchId") }
+                )
             }
-        }
-    ) { paddingValues ->
-        Box(modifier = Modifier.padding(paddingValues)) {
-            NavHost(
-                navController = navController,
-                startDestination = BottomTab.HOME.route
-            ) {
-                composable(BottomTab.HOME.route) {
-                    HomeScreen(
-                        viewModel = sharedViewModel,
-                        onNavigateToMatchDetails = { matchId -> navController.navigate("match/$matchId") }
-                    )
-                }
                 composable(BottomTab.LIVE.route) {
                     LiveScreen(
                         viewModel = sharedViewModel,
@@ -94,6 +77,22 @@ fun AppNavigation() {
                     )
                 }
             }
+        
+        val shouldShowBottomBar = currentRoute in BottomTab.values().map { it.route }
+        if (shouldShowBottomBar) {
+            ScoreKnightBottomBar(
+                currentRoute = currentRoute,
+                onNavigate = { tab ->
+                    navController.navigate(tab.route) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                },
+                modifier = Modifier.align(androidx.compose.ui.Alignment.BottomCenter)
+            )
         }
     }
 }

@@ -1,6 +1,8 @@
 package com.k9t.scoreknight.presentation.profile
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -43,27 +45,20 @@ import androidx.compose.ui.unit.dp
 fun ProfileScreen() {
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { 
-                    Text(
-                        text = "Profile & Settings",
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold
-                    ) 
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary
-                )
+            com.k9t.scoreknight.presentation.components.GlassTopBar(
+                title = "Profile & Settings",
+                onNotificationClick = null
             )
         }
     ) { paddingValues ->
+        val scrollState = androidx.compose.foundation.rememberScrollState()
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
                 .background(MaterialTheme.colorScheme.background)
-                .padding(16.dp),
+                .verticalScroll(scrollState)
+                .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 120.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Profile Header

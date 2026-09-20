@@ -15,15 +15,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
@@ -31,8 +25,8 @@ import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -47,9 +41,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.k9t.scoreknight.domain.model.CricketMatch
 import com.k9t.scoreknight.presentation.components.EmptyState
 import com.k9t.scoreknight.presentation.components.ErrorState
@@ -78,40 +73,28 @@ fun MatchesScreen(
     val categoryChips = listOf("All", "International", "League", "Domestic", "Women's", "More")
     var selectedCategory by remember { mutableStateOf(categoryChips[0]) }
 
+    val pullToRefreshState = rememberPullToRefreshState()
+
+    val isRefreshing = (uiState as? HomeUiState.Success)?.isRefreshing == true
+    if (pullToRefreshState.isRefreshing) {
+        LaunchedEffect(true) {
+            viewModel.loadMatches(isRefresh = true)
+        }
+    }
+    
+    LaunchedEffect(isRefreshing) {
+        if (isRefreshing) {
+            pullToRefreshState.startRefresh()
+        } else {
+            pullToRefreshState.endRefresh()
+        }
+    }
+
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { 
-                    Column {
-                        Text(
-                            text = "ScoreKnight",
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f),
-                            fontSize = 14.sp
-                        )
-                        Text(
-                            text = "Matches",
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.Black,
-                            color = MaterialTheme.colorScheme.onPrimary
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(onClick = { viewModel.loadMatches(isRefresh = true) }) {
-                        Icon(imageVector = Icons.Default.Refresh, contentDescription = "Refresh", tint = MaterialTheme.colorScheme.onPrimary)
-                    }
-                    IconButton(onClick = { /* Search */ }) {
-                        Icon(imageVector = Icons.Default.Search, contentDescription = "Search", tint = MaterialTheme.colorScheme.onPrimary)
-                    }
-                    IconButton(onClick = { /* Calendar */ }) {
-                        Icon(imageVector = Icons.Default.DateRange, contentDescription = "Calendar", tint = MaterialTheme.colorScheme.onPrimary)
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                )
+            com.k9t.scoreknight.presentation.components.GlassTopBar(
+                title = "Matches",
+                onNotificationClick = null
             )
         }
     ) { paddingValues ->
@@ -173,8 +156,12 @@ fun MatchesScreen(
                 }
             }
 
+            // The refreshable scroll area, below the tabs/chips
             Box(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clipToBounds()
+                    .nestedScroll(pullToRefreshState.nestedScrollConnection)
             ) {
                 when (val state = uiState) {
                     is HomeUiState.Loading -> {
@@ -187,7 +174,6 @@ fun MatchesScreen(
                         ) { page ->
                             val currentTabFilter = MatchFilter.values()[page]
 
-                            // 1. Get matches for the current tab directly from backend pre-filtered lists
                             var filteredMatches = when (currentTabFilter) {
                                 MatchFilter.ALL -> state.matches
                                 MatchFilter.LIVE -> state.liveMatches
@@ -195,7 +181,6 @@ fun MatchesScreen(
                                 MatchFilter.COMPLETED -> state.completedMatches
                             }
                             
-                            // 2. Filter by Category Chip (Graceful mock filter)
                             if (selectedCategory != "All") {
                                 filteredMatches = filteredMatches.filter { match ->
                                     val allText = "${match.teamA} ${match.teamB} ${match.venue} ${match.status}".lowercase()
@@ -203,7 +188,7 @@ fun MatchesScreen(
                                         "Women's" -> allText.contains("women")
                                         "Domestic", "League" -> !allText.contains("international") && !allText.contains("test")
                                         "International" -> allText.contains("test") || allText.contains("odi") || allText.contains("t20i")
-                                        else -> true // Fallback
+                                        else -> true
                                     }
                                 }
                             }
@@ -214,15 +199,14 @@ fun MatchesScreen(
                                     subtitle = "No matches match the selected filters."
                                 )
                             } else {
-                                // 3. Group by Date for Section Headers
                                 val groupedMatches = filteredMatches.groupBy { 
                                     if (it.matchDate.isNotBlank()) it.matchDate else "Other Matches"
                                 }
 
                                 LazyColumn(
                                     modifier = Modifier.fillMaxSize(),
-                                    contentPadding = PaddingValues(top = 8.dp, bottom = 80.dp),
-                                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                                    contentPadding = PaddingValues(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 120.dp),
+                                    verticalArrangement = Arrangement.spacedBy(16.dp)
                                 ) {
                                     groupedMatches.forEach { (dateHeader, matches) ->
                                         item {
@@ -239,10 +223,6 @@ fun MatchesScreen(
                                                 )
                                             }
                                         }
-                                        
-                                        item {
-                                            Spacer(modifier = Modifier.height(8.dp))
-                                        }
                                     }
                                 }
                             }
@@ -258,6 +238,13 @@ fun MatchesScreen(
                         EmptyState()
                     }
                 }
+                
+                PullToRefreshContainer(
+                    modifier = Modifier.align(Alignment.TopCenter),
+                    state = pullToRefreshState,
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    contentColor = MaterialTheme.colorScheme.primary
+                )
             }
         }
     }
@@ -268,7 +255,7 @@ private fun SectionHeader(title: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(vertical = 4.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -286,3 +273,4 @@ private fun SectionHeader(title: String) {
         )
     }
 }
+

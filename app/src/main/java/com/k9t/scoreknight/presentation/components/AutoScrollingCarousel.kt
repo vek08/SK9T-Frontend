@@ -34,7 +34,7 @@ fun <T> AutoScrollingCarousel(
     modifier: Modifier = Modifier,
     autoScrollDelay: Long = 4000L,
     pageSpacing: androidx.compose.ui.unit.Dp = 16.dp,
-    cardWidth: androidx.compose.ui.unit.Dp = 340.dp
+    cardWidth: androidx.compose.ui.unit.Dp = 280.dp
 ) {
     if (items.isEmpty()) return
 
