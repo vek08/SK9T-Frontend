@@ -14,9 +14,9 @@ class CricketRepositoryImpl @Inject constructor(
         return try {
             val response = api.getHomeMatches()
             val result = mapOf(
-                "live" to response.liveMatches.map { it.toDomain() },
-                "upcoming" to response.upcomingMatches.map { it.toDomain() },
-                "completed" to response.completedMatches.map { it.toDomain() }
+                "live" to response.liveMatches.map { it.toDomain("LIVE") },
+                "upcoming" to response.upcomingMatches.map { it.toDomain("UPCOMING") },
+                "completed" to response.completedMatches.map { it.toDomain("FINISHED") }
             )
             Result.success(result)
         } catch (e: Exception) {

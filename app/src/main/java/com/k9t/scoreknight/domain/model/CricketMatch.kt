@@ -7,12 +7,13 @@ data class InningScore(
 
 data class CricketMatch(
     val matchId: String,
+    val matchState: String,
     val teamA: String,
     val teamB: String,
     val teamALogo: String?,
     val teamBLogo: String?,
     val status: String,
-    val score: String?, // Retained for backwards compatibility if needed
+    val score: String?,
     val parsedScores: List<InningScore>?,
     val venue: String,
     val matchDate: String,

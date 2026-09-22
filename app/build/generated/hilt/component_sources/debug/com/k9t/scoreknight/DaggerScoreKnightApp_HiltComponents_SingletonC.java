@@ -460,15 +460,15 @@ public final class DaggerScoreKnightApp_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
-      static String com_k9t_scoreknight_presentation_matchdetails_MatchDetailsViewModel = "com.k9t.scoreknight.presentation.matchdetails.MatchDetailsViewModel";
-
       static String com_k9t_scoreknight_presentation_home_HomeViewModel = "com.k9t.scoreknight.presentation.home.HomeViewModel";
 
-      @KeepFieldType
-      MatchDetailsViewModel com_k9t_scoreknight_presentation_matchdetails_MatchDetailsViewModel2;
+      static String com_k9t_scoreknight_presentation_matchdetails_MatchDetailsViewModel = "com.k9t.scoreknight.presentation.matchdetails.MatchDetailsViewModel";
 
       @KeepFieldType
       HomeViewModel com_k9t_scoreknight_presentation_home_HomeViewModel2;
+
+      @KeepFieldType
+      MatchDetailsViewModel com_k9t_scoreknight_presentation_matchdetails_MatchDetailsViewModel2;
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {

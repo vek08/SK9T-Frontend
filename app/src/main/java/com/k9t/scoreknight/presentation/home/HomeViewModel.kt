@@ -73,7 +73,11 @@ class HomeViewModel @Inject constructor(
             }
             
             val result = getHomeMatchesUseCase()
-            _matchesResult.value = result
+            if (isRefresh && result.isFailure && _matchesResult.value?.isSuccess == true) {
+                // Keep existing data on failed refresh
+            } else {
+                _matchesResult.value = result
+            }
             
             _isLoading.value = false
             _isRefreshing.value = false

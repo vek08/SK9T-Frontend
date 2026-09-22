@@ -26,6 +26,7 @@ import com.k9t.scoreknight.domain.model.CricketMatch
 
 @Composable
 fun MatchCard(
+
     match: CricketMatch,
     isFavorite: Boolean = false,
     onFavoriteClick: () -> Unit = {},
@@ -98,11 +99,11 @@ fun MatchCard(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Surface(
-                        color = if (match.status.lowercase().contains("live")) Color(0xFFE11D48) else Color(0xFF334155),
+                        color = if (match.matchState.uppercase() == "LIVE") Color(0xFFE11D48) else Color(0xFF334155),
                         shape = RoundedCornerShape(12.dp)
                     ) {
                         Text(
-                            text = if (match.status.lowercase().contains("live")) "LIVE" else if (match.status.lowercase().contains("upcoming")) "UPCOMING" else "FINISHED",
+                            text = match.matchState.uppercase(),
                             style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
                             color = Color.White,
                             modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp)
