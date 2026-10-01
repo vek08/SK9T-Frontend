@@ -134,24 +134,24 @@ private fun HomeContent(
                 listOf(
                     com.k9t.scoreknight.domain.model.CricketBanner(
                         id = "1",
-                        backgroundUrl = "https://res.cloudinary.com/dwmsjuuox/image/upload/v1789896012/virat_xxjatv.jpg",
-                        playerName = "Virat Kohli",
-                        tagline = "The Run Machine",
-                        destination = "player_profile/kohli"
+                        backgroundUrl = "https://res.cloudinary.com/dwmsjuuox/image/upload/v1790891226/cr7_fkb8we.jpg",
+                        playerName = "Cristiano Ronaldo",
+                        tagline = "The Goal Machine",
+                        destination = "player_profile/cr7"
                     ),
                     com.k9t.scoreknight.domain.model.CricketBanner(
                         id = "2",
-                        backgroundUrl = "https://res.cloudinary.com/dwmsjuuox/image/upload/v1789896012/ms_ysvx2v.jpg",
-                        playerName = "MS Dhoni",
+                        backgroundUrl = "https://res.cloudinary.com/dwmsjuuox/image/upload/v1790891227/messi_c2agfh.jpg",
+                        playerName = "Lionel Messi",
                         tagline = "Captain Cool",
-                        destination = "player_profile/dhoni"
+                        destination = "player_profile/messi"
                     ),
                     com.k9t.scoreknight.domain.model.CricketBanner(
                         id = "3",
-                        backgroundUrl = "https://res.cloudinary.com/dwmsjuuox/image/upload/v1789896012/rohit_o9sd11.jpg",
-                        playerName = "Rohit Sharma",
+                        backgroundUrl = "https://res.cloudinary.com/dwmsjuuox/image/upload/v1790891225/erling_may23z.jpg",
+                        playerName = "Erling Haaland",
                         tagline = "Hitman",
-                        destination = "player_profile/rohit"
+                        destination = "player_profile/erling"
                     )
                 )
             }

@@ -297,9 +297,9 @@ private fun SportCard(
     val title = if (isCricket) "CRICKET" else "FOOTBALL"
     // Note: using placeholder images matching the sport requirement
     val imageUrl = if (isCricket) 
-        "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?q=80&w=1000&auto=format&fit=crop" 
+        "https://res.cloudinary.com/dwmsjuuox/image/upload/v1790890458/ind_fnmklb.jpg"
     else 
-        "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?q=80&w=1000&auto=format&fit=crop"
+        "https://res.cloudinary.com/dwmsjuuox/image/upload/v1790890459/football_f5uadf.avif"
 
     Box(
         modifier = modifier
