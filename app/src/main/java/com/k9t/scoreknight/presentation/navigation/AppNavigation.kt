@@ -24,6 +24,8 @@ import com.k9t.scoreknight.presentation.profile.ProfileScreen
 import com.k9t.scoreknight.presentation.landing.ScoreKnightLandingScreen
 import com.k9t.scoreknight.football.presentation.home.FootballHomeScreen
 import com.k9t.scoreknight.football.presentation.matches.FootballMatchesScreen
+import com.k9t.scoreknight.football.presentation.live.FootballLiveScreen
+import com.k9t.scoreknight.football.presentation.favorites.FootballFavoritesScreen
 import com.k9t.scoreknight.football.presentation.details.FootballMatchDetailsScreen
 import com.k9t.scoreknight.football.presentation.standings.FootballStandingsScreen
 import androidx.navigation.NavType
@@ -63,6 +65,19 @@ fun AppNavigation() {
                     onNavigateToMatchDetails = { id -> navController.navigate("football_match/$id") }
                 )
             }
+            composable("football_live") {
+                FootballLiveScreen(viewModel = sharedFootballViewModel,
+                    onNavigateToMatchDetails = { id -> navController.navigate("football_match/$id") }
+                )
+            }
+            composable("football_favorites") {
+                FootballFavoritesScreen(viewModel = sharedFootballViewModel,
+                    onNavigateToMatchDetails = { id -> navController.navigate("football_match/$id") }
+                )
+            }
+            composable("football_profile") {
+                ProfileScreen()
+            }
             composable("football_standings") {
                 FootballStandingsScreen()
             }
@@ -82,38 +97,38 @@ fun AppNavigation() {
                     onNavigateToMatchDetails = { matchId -> navController.navigate("match/$matchId") }
                 )
             }
-                composable(BottomTab.LIVE.route) {
-                    LiveScreen(
-                        viewModel = sharedViewModel,
-                        onNavigateToMatchDetails = { matchId -> navController.navigate("match/$matchId") }
-                    )
-                }
-                composable(BottomTab.MATCHES.route) {
-                    MatchesScreen(
-                        viewModel = sharedViewModel,
-                        onNavigateToMatchDetails = { matchId -> navController.navigate("match/$matchId") }
-                    )
-                }
-                composable(BottomTab.FAVORITES.route) {
-                    FavoritesScreen(
-                        viewModel = sharedViewModel,
-                        onNavigateToMatchDetails = { matchId -> navController.navigate("match/$matchId") }
-                    )
-                }
-                composable(BottomTab.PROFILE.route) {
-                    ProfileScreen()
-                }
-                composable(
-                    route = "match/{matchId}",
-                    arguments = listOf(navArgument("matchId") { type = NavType.StringType })
-                ) { backStackEntry ->
-                    val matchDetailsViewModel: com.k9t.scoreknight.presentation.matchdetails.MatchDetailsViewModel = hiltViewModel()
-                    MatchDetailsScreen(
-                        viewModel = matchDetailsViewModel,
-                        onBackClick = { navController.popBackStack() }
-                    )
-                }
+            composable(BottomTab.LIVE.route) {
+                LiveScreen(
+                    viewModel = sharedViewModel,
+                    onNavigateToMatchDetails = { matchId -> navController.navigate("match/$matchId") }
+                )
             }
+            composable(BottomTab.MATCHES.route) {
+                MatchesScreen(
+                    viewModel = sharedViewModel,
+                    onNavigateToMatchDetails = { matchId -> navController.navigate("match/$matchId") }
+                )
+            }
+            composable(BottomTab.FAVORITES.route) {
+                FavoritesScreen(
+                    viewModel = sharedViewModel,
+                    onNavigateToMatchDetails = { matchId -> navController.navigate("match/$matchId") }
+                )
+            }
+            composable(BottomTab.PROFILE.route) {
+                ProfileScreen()
+            }
+            composable(
+                route = "match/{matchId}",
+                arguments = listOf(navArgument("matchId") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val matchDetailsViewModel: com.k9t.scoreknight.presentation.matchdetails.MatchDetailsViewModel = hiltViewModel()
+                MatchDetailsScreen(
+                    viewModel = matchDetailsViewModel,
+                    onBackClick = { navController.popBackStack() }
+                )
+            }
+        }
         
         val isFootballRoute = currentRoute.startsWith("football_")
         val isDetailRoute = currentRoute.startsWith("match/") || currentRoute.startsWith("football_match/")
@@ -122,7 +137,9 @@ fun AppNavigation() {
         val bottomBarRoute = when {
             currentRoute == "football_home" -> "home"
             currentRoute == "football_matches" -> "matches"
-            currentRoute == "football_standings" -> "live"
+            currentRoute == "football_live" -> "live"
+            currentRoute == "football_favorites" -> "favorites"
+            currentRoute == "football_profile" -> "profile"
             else -> currentRoute
         }
 
@@ -134,9 +151,9 @@ fun AppNavigation() {
                         when (tab) {
                             BottomTab.HOME -> "football_home"
                             BottomTab.MATCHES -> "football_matches"
-                            BottomTab.LIVE -> "football_standings"
-                            BottomTab.FAVORITES -> "football_home"
-                            BottomTab.PROFILE -> "football_home"
+                            BottomTab.LIVE -> "football_live"
+                            BottomTab.FAVORITES -> "football_favorites"
+                            BottomTab.PROFILE -> "football_profile"
                         }
                     } else {
                         tab.route
@@ -154,7 +171,3 @@ fun AppNavigation() {
         }
     }
 }
-
-
-
-
