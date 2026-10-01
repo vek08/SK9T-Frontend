@@ -2,7 +2,9 @@ package com.k9t.scoreknight.auth.presentation
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -41,16 +43,40 @@ fun SignupScreen(
         containerColor = Color(0xFF1E2822),
         topBar = {
             TopAppBar(
-                title = { Text("Sign Up", color = Color.White, fontWeight = FontWeight.Bold) },
+                title = { Text("ScoreKnight", color = Color.White, fontWeight = FontWeight.Bold) },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent)
             )
         }
     ) { padding ->
         Column(
-            modifier = Modifier.fillMaxSize().padding(padding).padding(24.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+                .imePadding()
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 24.dp, vertical = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Top
         ) {
+            Spacer(modifier = Modifier.height(24.dp))
+            
+            Text(
+                "Create Account", 
+                fontSize = 28.sp, 
+                color = Color.White, 
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                "Join ScoreKnight and personalize your experience.", 
+                fontSize = 14.sp, 
+                color = Color.Gray,
+                modifier = Modifier.fillMaxWidth()
+            )
+            
+            Spacer(modifier = Modifier.height(40.dp))
+
             OutlinedTextField(
                 value = name,
                 onValueChange = { name = it },
@@ -116,17 +142,18 @@ fun SignupScreen(
                 ),
                 shape = RoundedCornerShape(8.dp)
             )
-            Spacer(modifier = Modifier.height(24.dp))
+            
+            Spacer(modifier = Modifier.height(32.dp))
 
             Button(
                 onClick = { 
+                    errorMsg = ""
                     if (password != confirmPassword) {
                         errorMsg = "Passwords do not match"
-                    } else if (email.isBlank() || name.isBlank() || password.isBlank()) {
-                        errorMsg = "Please fill all fields"
+                    } else if (name.isBlank() || email.isBlank() || password.isBlank()) {
+                        errorMsg = "All fields are required"
                     } else {
-                        errorMsg = ""
-                        viewModel.register(RegisterRequest(name, email, password)) 
+                        viewModel.register(RegisterRequest(email, password, name)) 
                     }
                 },
                 modifier = Modifier.fillMaxWidth().height(50.dp),
@@ -143,12 +170,13 @@ fun SignupScreen(
             if (errorMsg.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(errorMsg, color = Color.Red)
-            } else if (uiState is AuthUiState.Error) {
+            }
+            if (uiState is AuthUiState.Error) {
                 Spacer(modifier = Modifier.height(16.dp))
                 Text((uiState as AuthUiState.Error).message, color = Color.Red)
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(32.dp))
             Row {
                 Text("Already have an account? ", color = Color.Gray)
                 Text(
@@ -158,6 +186,7 @@ fun SignupScreen(
                     modifier = Modifier.clickable { onNavigateToLogin() }
                 )
             }
+            Spacer(modifier = Modifier.height(32.dp))
         }
     }
 }

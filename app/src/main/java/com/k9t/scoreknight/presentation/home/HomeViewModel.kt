@@ -91,8 +91,9 @@ class HomeViewModel @Inject constructor(
         if (!tokenManager.isLoggedIn.value) {
             AuthEventManager.triggerAuthRequired()
         } else {
-            favoritesManager.toggleFavorite(matchId)
+            favoritesManager.toggleFavorite(matchId, "CRICKET")
         }
     }
 }
+
 

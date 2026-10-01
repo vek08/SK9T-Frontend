@@ -1,6 +1,7 @@
 package com.k9t.scoreknight.data.local
 
 import com.k9t.scoreknight.auth.data.FavoritesApiService
+import com.k9t.scoreknight.auth.data.TokenManager
 import com.k9t.scoreknight.auth.domain.FavoriteDto
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -13,14 +14,27 @@ import kotlinx.coroutines.launch
 
 @Singleton
 class FavoritesManager @Inject constructor(
-    private val api: FavoritesApiService
+    private val api: FavoritesApiService,
+    private val tokenManager: TokenManager
 ) {
     private val _favorites = MutableStateFlow<Set<String>>(emptySet())
     val favorites: StateFlow<Set<String>> = _favorites.asStateFlow()
 
     private val scope = CoroutineScope(Dispatchers.IO)
 
-    fun fetchFavorites() {
+    init {
+        scope.launch {
+            tokenManager.isLoggedIn.collect { isLoggedIn ->
+                if (isLoggedIn) {
+                    fetchFavorites()
+                } else {
+                    _favorites.value = emptySet()
+                }
+            }
+        }
+    }
+
+    private fun fetchFavorites() {
         scope.launch {
             try {
                 val list = api.getFavorites()

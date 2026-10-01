@@ -88,8 +88,8 @@ fun FootballHomeScreen(
                         liveMatches = state.liveMatches,
                         upcomingMatches = state.upcomingMatches,
                         completedMatches = state.completedMatches,
-                        favorites = emptySet(),
-                        onFavoriteClick = {},
+                        favorites = state.favorites,
+                        onFavoriteClick = { viewModel.toggleFavorite(it) },
                         onNavigateToMatchDetails = onNavigateToMatchDetails
                     )
                 }
@@ -266,6 +266,7 @@ private fun SectionEmptyState(message: String) {
         )
     }
 }
+
 
 
 

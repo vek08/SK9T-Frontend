@@ -1,6 +1,7 @@
 package com.k9t.scoreknight.data.local;
 
 import com.k9t.scoreknight.auth.data.FavoritesApiService;
+import com.k9t.scoreknight.auth.data.TokenManager;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
 import dagger.internal.QualifierMetadata;
@@ -25,20 +26,25 @@ import javax.inject.Provider;
 public final class FavoritesManager_Factory implements Factory<FavoritesManager> {
   private final Provider<FavoritesApiService> apiProvider;
 
-  public FavoritesManager_Factory(Provider<FavoritesApiService> apiProvider) {
+  private final Provider<TokenManager> tokenManagerProvider;
+
+  public FavoritesManager_Factory(Provider<FavoritesApiService> apiProvider,
+      Provider<TokenManager> tokenManagerProvider) {
     this.apiProvider = apiProvider;
+    this.tokenManagerProvider = tokenManagerProvider;
   }
 
   @Override
   public FavoritesManager get() {
-    return newInstance(apiProvider.get());
+    return newInstance(apiProvider.get(), tokenManagerProvider.get());
   }
 
-  public static FavoritesManager_Factory create(Provider<FavoritesApiService> apiProvider) {
-    return new FavoritesManager_Factory(apiProvider);
+  public static FavoritesManager_Factory create(Provider<FavoritesApiService> apiProvider,
+      Provider<TokenManager> tokenManagerProvider) {
+    return new FavoritesManager_Factory(apiProvider, tokenManagerProvider);
   }
 
-  public static FavoritesManager newInstance(FavoritesApiService api) {
-    return new FavoritesManager(api);
+  public static FavoritesManager newInstance(FavoritesApiService api, TokenManager tokenManager) {
+    return new FavoritesManager(api, tokenManager);
   }
 }
