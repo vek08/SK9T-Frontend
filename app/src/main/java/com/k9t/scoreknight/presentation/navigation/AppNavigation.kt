@@ -21,9 +21,12 @@ import com.k9t.scoreknight.presentation.live.LiveScreen
 import com.k9t.scoreknight.presentation.matches.MatchesScreen
 import com.k9t.scoreknight.presentation.matchdetails.MatchDetailsScreen
 import com.k9t.scoreknight.presentation.profile.ProfileScreen
+import com.k9t.scoreknight.presentation.landing.ScoreKnightLandingScreen
+import com.k9t.scoreknight.presentation.football.FootballHomeScreen
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 
+@OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class, androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
@@ -36,9 +39,20 @@ fun AppNavigation() {
     Box(modifier = Modifier.fillMaxSize()) {
         NavHost(
             navController = navController,
-            startDestination = BottomTab.HOME.route,
+            startDestination = "landing",
             modifier = Modifier.fillMaxSize()
         ) {
+            composable("landing") {
+                ScoreKnightLandingScreen(
+                    onNavigateToCricket = { navController.navigate(BottomTab.HOME.route) },
+                    onNavigateToFootball = { navController.navigate("football_home") }
+                )
+            }
+            composable("football_home") {
+                FootballHomeScreen(
+                    onBackClick = { navController.popBackStack() }
+                )
+            }
             composable(BottomTab.HOME.route) {
                 HomeScreen(
                     viewModel = sharedViewModel,
