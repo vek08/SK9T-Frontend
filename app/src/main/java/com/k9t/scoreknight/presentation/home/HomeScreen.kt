@@ -23,7 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -35,13 +34,12 @@ import com.k9t.scoreknight.presentation.components.AutoScrollingCarousel
 import com.k9t.scoreknight.presentation.components.EmptyState
 import com.k9t.scoreknight.presentation.components.ErrorState
 import com.k9t.scoreknight.presentation.components.LoadingState
-import com.k9t.scoreknight.presentation.home.HomeCarouselCard
+import com.k9t.scoreknight.presentation.components.MatchCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel(),
-    onNavigateToMatchDetails: (String) -> Unit
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val pullToRefreshState = rememberPullToRefreshState()
@@ -65,9 +63,18 @@ fun HomeScreen(
 
     Scaffold(
         topBar = {
-            com.k9t.scoreknight.presentation.components.GlassTopBar(
-                title = "ScoreKnight",
-                onNotificationClick = { /* Handle notification click */ }
+            TopAppBar(
+                title = { 
+                    Text(
+                        text = "ScoreKnight",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold
+                    ) 
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary
+                )
             )
         }
     ) { paddingValues ->
@@ -84,12 +91,9 @@ fun HomeScreen(
                 }
                 is HomeUiState.Success -> {
                     HomeContent(
-                        liveMatches = state.liveMatches,
-                        upcomingMatches = state.upcomingMatches,
-                        completedMatches = state.completedMatches,
+                        matches = state.matches,
                         favorites = state.favorites,
-                        onFavoriteClick = viewModel::toggleFavorite,
-                        onNavigateToMatchDetails = onNavigateToMatchDetails
+                        onFavoriteClick = viewModel::toggleFavorite
                     )
                 }
                 is HomeUiState.Error -> {
@@ -115,56 +119,18 @@ fun HomeScreen(
 
 @Composable
 private fun HomeContent(
-    liveMatches: List<CricketMatch>,
-    upcomingMatches: List<CricketMatch>,
-    completedMatches: List<CricketMatch>,
+    matches: List<CricketMatch>,
     favorites: Set<String>,
-    onFavoriteClick: (String) -> Unit,
-    onNavigateToMatchDetails: (String) -> Unit
+    onFavoriteClick: (String) -> Unit
 ) {
+    val liveMatches = matches.filter { it.status.lowercase().contains("live") || it.status.lowercase().contains("inning") }
+    val upcomingMatches = matches.filter { it.status.lowercase().contains("upcoming") || it.status.lowercase().contains("yet to begin") }
+    val completedMatches = matches.filterNot { liveMatches.contains(it) || upcomingMatches.contains(it) }
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(top = 16.dp, bottom = 120.dp)
+        contentPadding = PaddingValues(bottom = 24.dp)
     ) {
-        // Cricketer Banner Slider Section
-        item {
-            val banners = remember {
-                listOf(
-                    com.k9t.scoreknight.domain.model.CricketBanner(
-                        id = "1",
-                        backgroundUrl = "https://res.cloudinary.com/dwmsjuuox/image/upload/v1789896012/virat_xxjatv.jpg",
-                        playerName = "Virat Kohli",
-                        tagline = "The Run Machine",
-                        destination = "player_profile/kohli"
-                    ),
-                    com.k9t.scoreknight.domain.model.CricketBanner(
-                        id = "2",
-                        backgroundUrl = "https://res.cloudinary.com/dwmsjuuox/image/upload/v1789896012/ms_ysvx2v.jpg",
-                        playerName = "MS Dhoni",
-                        tagline = "Captain Cool",
-                        destination = "player_profile/dhoni"
-                    ),
-                    com.k9t.scoreknight.domain.model.CricketBanner(
-                        id = "3",
-                        backgroundUrl = "https://res.cloudinary.com/dwmsjuuox/image/upload/v1789896012/rohit_o9sd11.jpg",
-                        playerName = "Rohit Sharma",
-                        tagline = "Hitman",
-                        destination = "player_profile/rohit"
-                    )
-                )
-            }
-            
-            CricketerBannerSlider(
-                banners = banners,
-                onBannerClick = { banner -> 
-                    // Safe click handling as requested: does not crash if destination is not yet implemented
-                    // TODO: Navigate to banner.destination when feature is available
-                }
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-        }
-
         // Live Now Section
         item {
             SectionHeader(title = "LIVE NOW")
@@ -173,11 +139,11 @@ private fun HomeContent(
                     items = liveMatches,
                     autoScrollDelay = 4000L,
                     itemContent = { match ->
-                        HomeCarouselCard(
+                        MatchCard(
                             match = match,
                             isFavorite = favorites.contains(match.matchId),
                             onFavoriteClick = { onFavoriteClick(match.matchId) },
-                            onClick = { onNavigateToMatchDetails(match.matchId) }
+                            modifier = Modifier.width(300.dp)
                         )
                     }
                 )
@@ -195,11 +161,11 @@ private fun HomeContent(
                     items = upcomingMatches,
                     autoScrollDelay = 5000L,
                     itemContent = { match ->
-                        HomeCarouselCard(
+                        MatchCard(
                             match = match,
                             isFavorite = favorites.contains(match.matchId),
                             onFavoriteClick = { onFavoriteClick(match.matchId) },
-                            onClick = { onNavigateToMatchDetails(match.matchId) }
+                            modifier = Modifier.width(300.dp)
                         )
                     }
                 )
@@ -217,11 +183,11 @@ private fun HomeContent(
                     items = completedMatches,
                     autoScrollDelay = 6000L,
                     itemContent = { match ->
-                        HomeCarouselCard(
+                        MatchCard(
                             match = match,
                             isFavorite = favorites.contains(match.matchId),
                             onFavoriteClick = { onFavoriteClick(match.matchId) },
-                            onClick = { onNavigateToMatchDetails(match.matchId) }
+                            modifier = Modifier.width(300.dp)
                         )
                     }
                 )

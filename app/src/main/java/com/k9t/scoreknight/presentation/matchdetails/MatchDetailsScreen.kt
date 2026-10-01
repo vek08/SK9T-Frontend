@@ -38,12 +38,6 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
-import kotlinx.coroutines.launch
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -61,6 +55,8 @@ import com.k9t.scoreknight.domain.model.CricketMatch
 import com.k9t.scoreknight.presentation.components.EmptyState
 import com.k9t.scoreknight.presentation.components.ErrorState
 import com.k9t.scoreknight.presentation.components.LoadingState
+import com.k9t.scoreknight.presentation.home.HomeUiState
+import com.k9t.scoreknight.presentation.home.HomeViewModel
 
 enum class MatchTab(val title: String) {
     INFO("INFO"),
@@ -71,23 +67,28 @@ enum class MatchTab(val title: String) {
     HIGHLIGHTS("HIGHLIGHTS")
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MatchDetailsScreen(
-    viewModel: MatchDetailsViewModel,
+    matchId: String,
+    viewModel: HomeViewModel,
     onBackClick: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val pagerState = rememberPagerState(pageCount = { MatchTab.values().size })
-    val coroutineScope = rememberCoroutineScope()
+    var selectedTab by remember { mutableStateOf(MatchTab.INFO) }
 
     when (val state = uiState) {
-        is MatchDetailsUiState.Loading -> {
+        is HomeUiState.Loading -> {
             LoadingState()
         }
-        is MatchDetailsUiState.Success -> {
-            val match = state.match
-            val isFavorite = state.isFavorite
+        is HomeUiState.Success -> {
+            val match = state.matches.find { it.matchId == matchId }
+            if (match == null) {
+                ErrorState(message = "Match details not found.", onRetry = onBackClick)
+                return
+            }
+
+            val isFavorite = state.favorites.contains(match.matchId)
 
             Scaffold(
                 topBar = {
@@ -139,31 +140,27 @@ fun MatchDetailsScreen(
                 ) {
                     // Premium Tab Bar
                     ScrollableTabRow(
-                        selectedTabIndex = pagerState.currentPage,
+                        selectedTabIndex = selectedTab.ordinal,
                         containerColor = MaterialTheme.colorScheme.primary,
                         contentColor = MaterialTheme.colorScheme.onPrimary,
                         edgePadding = 0.dp,
                         indicator = { tabPositions ->
                             TabRowDefaults.SecondaryIndicator(
-                                modifier = Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
+                                modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTab.ordinal]),
                                 color = MaterialTheme.colorScheme.tertiaryContainer,
                                 height = 3.dp
                             )
                         },
                         divider = {}
                     ) {
-                        MatchTab.values().forEachIndexed { index, tab ->
+                        MatchTab.values().forEach { tab ->
                             Tab(
-                                selected = pagerState.currentPage == index,
-                                onClick = { 
-                                    coroutineScope.launch {
-                                        pagerState.animateScrollToPage(index)
-                                    }
-                                },
+                                selected = selectedTab == tab,
+                                onClick = { selectedTab = tab },
                                 text = {
                                     Text(
                                         text = tab.title,
-                                        fontWeight = if (pagerState.currentPage == index) FontWeight.Bold else FontWeight.Normal,
+                                        fontWeight = if (selectedTab == tab) FontWeight.Bold else FontWeight.Normal,
                                         fontSize = 13.sp
                                     )
                                 }
@@ -171,39 +168,39 @@ fun MatchDetailsScreen(
                         }
                     }
 
-                    // Match Header always visible above the pager
-                    MatchDetailsHeader(match = match)
-
-                    // Content Below Tabs using HorizontalPager
-                    HorizontalPager(
-                        state = pagerState,
+                    // Content Below Tabs
+                    LazyColumn(
                         modifier = Modifier.fillMaxSize()
-                    ) { page ->
-                        val tab = MatchTab.values()[page]
-                        LazyColumn(
-                            modifier = Modifier.fillMaxSize()
-                        ) {
-                            item {
-                                Spacer(modifier = Modifier.height(16.dp))
-                                when (tab) {
-                                    MatchTab.INFO -> MatchInfoTab(match = match)
-                                    MatchTab.LIVE -> MatchLiveTab(match = match)
-                                    MatchTab.SCORECARD -> UnavailableTabState("Scorecard not available", "Detailed scorecard data is not provided by the current API.")
-                                    MatchTab.SQUADS -> MatchSquadsTab(match = match)
-                                    MatchTab.OVERS -> UnavailableTabState("Overs data not available", "Ball-by-ball data is not provided by the current API.")
-                                    MatchTab.HIGHLIGHTS -> UnavailableTabState("Highlights not available", "Match highlights are not provided by the current API.")
-                                }
+                    ) {
+                        // Match Header always visible at the top of scroll
+                        item {
+                            MatchDetailsHeader(match = match)
+                        }
+
+                        // Tab Content
+                        item {
+                            Spacer(modifier = Modifier.height(16.dp))
+                            when (selectedTab) {
+                                MatchTab.INFO -> MatchInfoTab(match = match)
+                                MatchTab.LIVE -> MatchLiveTab(match = match)
+                                MatchTab.SCORECARD -> UnavailableTabState("Scorecard not available", "Detailed scorecard data is not provided by the current API.")
+                                MatchTab.SQUADS -> UnavailableTabState("Squads not available", "Player squads are not provided by the current API.")
+                                MatchTab.OVERS -> UnavailableTabState("Overs data not available", "Ball-by-ball data is not provided by the current API.")
+                                MatchTab.HIGHLIGHTS -> UnavailableTabState("Highlights not available", "Match highlights are not provided by the current API.")
                             }
                         }
                     }
                 }
             }
         }
-        is MatchDetailsUiState.Error -> {
+        is HomeUiState.Error -> {
             ErrorState(
                 message = state.message,
-                onRetry = { viewModel.loadMatch() }
+                onRetry = { viewModel.loadMatches() }
             )
+        }
+        is HomeUiState.Empty -> {
+            ErrorState(message = "Match not found", onRetry = onBackClick)
         }
     }
 }
@@ -432,73 +429,3 @@ private fun UnavailableTabState(title: String, subtitle: String) {
         }
     }
 }
-
-@Composable
-private fun MatchSquadsTab(match: CricketMatch) {
-    if (match.squads.isNullOrEmpty()) {
-        UnavailableTabState("Squads not available", "Player squads are not provided by the current API or are not announced yet.")
-        return
-    }
-
-    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-        match.squads.forEach { squad ->
-            InfoSectionTitle(squad.teamName)
-            Card(
-                modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f))
-            ) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    squad.players.forEachIndexed { index, player ->
-                        Row(
-                            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .size(40.dp)
-                                    .clip(CircleShape)
-                                    .background(MaterialTheme.colorScheme.surface)
-                            ) {
-                                if (player.playerImg != null) {
-                                    AsyncImage(
-                                        model = player.playerImg,
-                                        contentDescription = "${player.name} image",
-                                        contentScale = ContentScale.Crop,
-                                        modifier = Modifier.fillMaxSize()
-                                    )
-                                } else {
-                                    Icon(
-                                        imageVector = Icons.Default.MoreVert,
-                                        contentDescription = null,
-                                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                                        modifier = Modifier.align(Alignment.Center)
-                                    )
-                                }
-                            }
-                            Spacer(modifier = Modifier.width(12.dp))
-                            Column(modifier = Modifier.weight(1f)) {
-                                Text(
-                                    text = player.name,
-                                    style = MaterialTheme.typography.bodyLarge,
-                                    fontWeight = FontWeight.Bold,
-                                    color = MaterialTheme.colorScheme.onSurface
-                                )
-                                if (player.role.isNotBlank()) {
-                                    Text(
-                                        text = player.role,
-                                        style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                                    )
-                                }
-                            }
-                        }
-                        if (index < squad.players.size - 1) {
-                            HorizontalDivider(color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-

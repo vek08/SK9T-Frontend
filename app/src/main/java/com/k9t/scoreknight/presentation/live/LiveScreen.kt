@@ -36,8 +36,7 @@ import com.k9t.scoreknight.presentation.home.HomeViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LiveScreen(
-    viewModel: HomeViewModel,
-    onNavigateToMatchDetails: (String) -> Unit
+    viewModel: HomeViewModel
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val pullToRefreshState = rememberPullToRefreshState()
@@ -61,9 +60,18 @@ fun LiveScreen(
 
     Scaffold(
         topBar = {
-            com.k9t.scoreknight.presentation.components.GlassTopBar(
-                title = "Live",
-                onNotificationClick = null
+            TopAppBar(
+                title = { 
+                    Text(
+                        text = "Live Matches",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold
+                    ) 
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary
+                )
             )
         }
     ) { paddingValues ->
@@ -79,7 +87,9 @@ fun LiveScreen(
                     LoadingState()
                 }
                 is HomeUiState.Success -> {
-                    val liveMatches = state.liveMatches
+                    val liveMatches = state.matches.filter { 
+                        it.status.lowercase().contains("live") || it.status.lowercase().contains("inning") 
+                    }
                     
                     if (liveMatches.isEmpty()) {
                         EmptyState(
@@ -89,16 +99,14 @@ fun LiveScreen(
                     } else {
                         LazyColumn(
                             modifier = Modifier.fillMaxSize(),
-                            contentPadding = PaddingValues(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 120.dp),
-                            verticalArrangement = Arrangement.spacedBy(16.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
+                            contentPadding = PaddingValues(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
                             items(items = liveMatches, key = { it.matchId }) { match ->
                                 MatchCard(
                                     match = match,
                                     isFavorite = state.favorites.contains(match.matchId),
-                                    onFavoriteClick = { viewModel.toggleFavorite(match.matchId) },
-                                    onClick = { onNavigateToMatchDetails(match.matchId) }
+                                    onFavoriteClick = { viewModel.toggleFavorite(match.matchId) }
                                 )
                             }
                         }

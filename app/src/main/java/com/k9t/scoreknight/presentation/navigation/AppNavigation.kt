@@ -1,4 +1,4 @@
-package com.k9t.scoreknight.presentation.navigation
+﻿package com.k9t.scoreknight.presentation.navigation
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,6 +21,8 @@ import com.k9t.scoreknight.presentation.live.LiveScreen
 import com.k9t.scoreknight.presentation.matches.MatchesScreen
 import com.k9t.scoreknight.presentation.matchdetails.MatchDetailsScreen
 import com.k9t.scoreknight.presentation.profile.ProfileScreen
+import com.k9t.scoreknight.presentation.landing.ScoreKnightLandingScreen
+import com.k9t.scoreknight.presentation.football.FootballHomeScreen
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 
@@ -28,7 +30,7 @@ import androidx.navigation.navArgument
 fun AppNavigation() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route ?: BottomTab.HOME.route
+    val currentRoute = navBackStackEntry?.destination?.route ?: "landing"
 
     // Create a shared ViewModel scoped to the AppNavigation (NavHost parent)
     val sharedViewModel: HomeViewModel = hiltViewModel()
@@ -36,31 +38,52 @@ fun AppNavigation() {
     Box(modifier = Modifier.fillMaxSize()) {
         NavHost(
             navController = navController,
-            startDestination = BottomTab.HOME.route,
+            startDestination = "landing",
             modifier = Modifier.fillMaxSize()
         ) {
+            composable("landing") {
+                ScoreKnightLandingScreen(
+                    onNavigateToCricket = {
+                        navController.navigate(BottomTab.HOME.route) {
+                            popUpTo("landing") { saveState = true }
+                            restoreState = true
+                            launchSingleTop = true
+                        }
+                    },
+                    onNavigateToFootball = {
+                        navController.navigate("football_home") {
+                            popUpTo("landing") { saveState = true }
+                            restoreState = true
+                            launchSingleTop = true
+                        }
+                    }
+                )
+            }
+            
+            composable("football_home") {
+                FootballHomeScreen(
+                    onBackClick = { navController.popBackStack() }
+                )
+            }
+
             composable(BottomTab.HOME.route) {
                 HomeScreen(
-                    viewModel = sharedViewModel,
-                    onNavigateToMatchDetails = { matchId -> navController.navigate("match/$matchId") }
+                    viewModel = sharedViewModel
                 )
             }
                 composable(BottomTab.LIVE.route) {
                     LiveScreen(
-                        viewModel = sharedViewModel,
-                        onNavigateToMatchDetails = { matchId -> navController.navigate("match/$matchId") }
+                        viewModel = sharedViewModel
                     )
                 }
                 composable(BottomTab.MATCHES.route) {
                     MatchesScreen(
-                        viewModel = sharedViewModel,
-                        onNavigateToMatchDetails = { matchId -> navController.navigate("match/$matchId") }
+                        viewModel = sharedViewModel
                     )
                 }
                 composable(BottomTab.FAVORITES.route) {
                     FavoritesScreen(
-                        viewModel = sharedViewModel,
-                        onNavigateToMatchDetails = { matchId -> navController.navigate("match/$matchId") }
+                        viewModel = sharedViewModel
                     )
                 }
                 composable(BottomTab.PROFILE.route) {
@@ -70,9 +93,10 @@ fun AppNavigation() {
                     route = "match/{matchId}",
                     arguments = listOf(navArgument("matchId") { type = NavType.StringType })
                 ) { backStackEntry ->
-                    val matchDetailsViewModel: com.k9t.scoreknight.presentation.matchdetails.MatchDetailsViewModel = hiltViewModel()
+                    val matchId = backStackEntry.arguments?.getString("matchId") ?: ""
                     MatchDetailsScreen(
-                        viewModel = matchDetailsViewModel,
+                        matchId = matchId,
+                        viewModel = sharedViewModel,
                         onBackClick = { navController.popBackStack() }
                     )
                 }
@@ -84,7 +108,7 @@ fun AppNavigation() {
                 currentRoute = currentRoute,
                 onNavigate = { tab ->
                     navController.navigate(tab.route) {
-                        popUpTo(navController.graph.startDestinationId) {
+                        popUpTo("landing") {
                             saveState = true
                         }
                         launchSingleTop = true
@@ -96,3 +120,4 @@ fun AppNavigation() {
         }
     }
 }
+

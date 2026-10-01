@@ -35,8 +35,7 @@ import com.k9t.scoreknight.presentation.home.HomeViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FavoritesScreen(
-    viewModel: HomeViewModel,
-    onNavigateToMatchDetails: (String) -> Unit
+    viewModel: HomeViewModel
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val pullToRefreshState = rememberPullToRefreshState()
@@ -60,9 +59,18 @@ fun FavoritesScreen(
 
     Scaffold(
         topBar = {
-            com.k9t.scoreknight.presentation.components.GlassTopBar(
-                title = "Favorites",
-                onNotificationClick = null
+            TopAppBar(
+                title = { 
+                    Text(
+                        text = "Favorites",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold
+                    ) 
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary
+                )
             )
         }
     ) { paddingValues ->
@@ -88,16 +96,14 @@ fun FavoritesScreen(
                     } else {
                         LazyColumn(
                             modifier = Modifier.fillMaxSize(),
-                            contentPadding = PaddingValues(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 120.dp),
-                            verticalArrangement = Arrangement.spacedBy(16.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
+                            contentPadding = PaddingValues(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
                             items(items = favoriteMatches, key = { it.matchId }) { match ->
                                 MatchCard(
                                     match = match,
                                     isFavorite = true,
-                                    onFavoriteClick = { viewModel.toggleFavorite(match.matchId) },
-                                    onClick = { onNavigateToMatchDetails(match.matchId) }
+                                    onFavoriteClick = { viewModel.toggleFavorite(match.matchId) }
                                 )
                             }
                         }

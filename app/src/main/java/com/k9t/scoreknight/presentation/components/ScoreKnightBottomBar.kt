@@ -1,4 +1,4 @@
-package com.k9t.scoreknight.presentation.components
+﻿package com.k9t.scoreknight.presentation.components
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring

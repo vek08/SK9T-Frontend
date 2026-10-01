@@ -1,8 +1,6 @@
-package com.k9t.scoreknight.presentation.profile
+﻿package com.k9t.scoreknight.presentation.profile
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,8 +17,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Notifications
+
 import androidx.compose.material.icons.rounded.Person
-import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
@@ -45,20 +43,27 @@ import androidx.compose.ui.unit.dp
 fun ProfileScreen() {
     Scaffold(
         topBar = {
-            com.k9t.scoreknight.presentation.components.GlassTopBar(
-                title = "Profile & Settings",
-                onNotificationClick = null
+            TopAppBar(
+                title = { 
+                    Text(
+                        text = "Profile & Settings",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold
+                    ) 
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary
+                )
             )
         }
     ) { paddingValues ->
-        val scrollState = androidx.compose.foundation.rememberScrollState()
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
                 .background(MaterialTheme.colorScheme.background)
-                .verticalScroll(scrollState)
-                .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 120.dp),
+                .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Profile Header
@@ -96,7 +101,7 @@ fun ProfileScreen() {
             ) {
                 Column {
                     SettingsItem(
-                        icon = Icons.Rounded.Settings,
+                        icon = Icons.Rounded.Info,
                         title = "Dark Theme",
                         subtitle = "Follows system setting",
                         hasSwitch = true

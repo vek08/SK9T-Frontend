@@ -59,29 +59,18 @@ fun HomeCarouselCard(
                 )
             }
 
-            // Glass Overlay Gradient
+            // Dark Gradient Overlay
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(
                         Brush.verticalGradient(
                             colors = listOf(
-                                Color(0xFF0F172A).copy(alpha = 0.6f),
-                                Color(0xFF0F172A).copy(alpha = 0.85f),
-                                Color(0xFF020617).copy(alpha = 0.95f)
+                                Color(0xFF0F172A).copy(alpha = 0.7f),
+                                Color(0xFF020617).copy(alpha = 0.95f),
+                                Color(0xFF020617)
                             )
                         )
-                    )
-            )
-
-            // Inner border for glassmorphism
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .border(
-                        width = 1.dp,
-                        color = Color.White.copy(alpha = 0.15f),
-                        shape = RoundedCornerShape(16.dp)
                     )
             )
 
