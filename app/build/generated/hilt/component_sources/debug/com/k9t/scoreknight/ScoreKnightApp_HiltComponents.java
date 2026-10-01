@@ -1,5 +1,6 @@
 package com.k9t.scoreknight;
 
+import com.k9t.scoreknight.auth.presentation.AuthViewModel_HiltModules;
 import com.k9t.scoreknight.di.NetworkModule;
 import com.k9t.scoreknight.di.RepositoryModule;
 import com.k9t.scoreknight.football.presentation.details.FootballMatchDetailsViewModel_HiltModules;
@@ -160,6 +161,7 @@ public final class ScoreKnightApp_HiltComponents {
 
   @Subcomponent(
       modules = {
+          AuthViewModel_HiltModules.KeyModule.class,
           FootballHomeViewModel_HiltModules.KeyModule.class,
           FootballMatchDetailsViewModel_HiltModules.KeyModule.class,
           FootballMatchesViewModel_HiltModules.KeyModule.class,
@@ -205,6 +207,7 @@ public final class ScoreKnightApp_HiltComponents {
 
   @Subcomponent(
       modules = {
+          AuthViewModel_HiltModules.BindsModule.class,
           FootballHomeViewModel_HiltModules.BindsModule.class,
           FootballMatchDetailsViewModel_HiltModules.BindsModule.class,
           FootballMatchesViewModel_HiltModules.BindsModule.class,

@@ -7,6 +7,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.k9t.scoreknight.auth.data.TokenManager
+import com.k9t.scoreknight.auth.presentation.AuthEventManager
 
 @HiltViewModel
 class FootballHomeViewModel @Inject constructor(

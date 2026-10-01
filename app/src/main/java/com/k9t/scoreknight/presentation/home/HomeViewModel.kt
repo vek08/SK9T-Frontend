@@ -13,11 +13,14 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.k9t.scoreknight.auth.data.TokenManager
+import com.k9t.scoreknight.auth.presentation.AuthEventManager
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getHomeMatchesUseCase: GetHomeMatchesUseCase,
-    private val favoritesManager: FavoritesManager
+    private val favoritesManager: FavoritesManager,
+    private val tokenManager: TokenManager
 ) : ViewModel() {
 
     private val _isLoading = MutableStateFlow(true)
@@ -85,7 +88,11 @@ class HomeViewModel @Inject constructor(
     }
 
     fun toggleFavorite(matchId: String) {
-        favoritesManager.toggleFavorite(matchId)
+        if (!tokenManager.isLoggedIn.value) {
+            AuthEventManager.triggerAuthRequired()
+        } else {
+            favoritesManager.toggleFavorite(matchId)
+        }
     }
 }
 

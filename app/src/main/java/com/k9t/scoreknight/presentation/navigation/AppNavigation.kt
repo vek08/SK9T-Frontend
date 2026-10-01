@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import com.k9t.scoreknight.auth.presentation.AuthEventManager
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
@@ -21,6 +23,9 @@ import com.k9t.scoreknight.presentation.live.LiveScreen
 import com.k9t.scoreknight.presentation.matches.MatchesScreen
 import com.k9t.scoreknight.presentation.matchdetails.MatchDetailsScreen
 import com.k9t.scoreknight.presentation.profile.ProfileScreen
+import com.k9t.scoreknight.auth.presentation.AuthViewModel
+import com.k9t.scoreknight.auth.presentation.AuthScreen
+import com.k9t.scoreknight.auth.presentation.SignupScreen
 import com.k9t.scoreknight.presentation.landing.ScoreKnightLandingScreen
 import com.k9t.scoreknight.football.presentation.home.FootballHomeScreen
 import com.k9t.scoreknight.football.presentation.matches.FootballMatchesScreen
@@ -42,13 +47,39 @@ fun AppNavigation() {
     // Create a shared ViewModel scoped to the AppNavigation (NavHost parent)
     val sharedViewModel: HomeViewModel = hiltViewModel()
     val sharedFootballViewModel: com.k9t.scoreknight.football.presentation.home.FootballHomeViewModel = hiltViewModel()
+    val authViewModel: AuthViewModel = hiltViewModel()
 
+        LaunchedEffect(Unit) {
+        AuthEventManager.authRequiredFlow.collect {
+            navController.navigate("login")
+        }
+    }
+    
     Box(modifier = Modifier.fillMaxSize()) {
         NavHost(
             navController = navController,
             startDestination = "landing",
             modifier = Modifier.fillMaxSize()
         ) {
+            
+            composable("login") {
+                AuthScreen(
+                    viewModel = authViewModel,
+                    onNavigateToSignup = { navController.navigate("signup") },
+                    onSuccess = { navController.popBackStack() }
+                )
+            }
+            composable("signup") {
+                SignupScreen(
+                    viewModel = authViewModel,
+                    onNavigateToLogin = { navController.popBackStack() },
+                    onSuccess = { 
+                        navController.popBackStack("login", inclusive = true)
+                        // maybe pop back to the previous screen that requested auth
+                    }
+                )
+            }
+
             composable("landing") {
                 ScoreKnightLandingScreen(
                     onNavigateToCricket = { navController.navigate(BottomTab.HOME.route) },
@@ -76,7 +107,10 @@ fun AppNavigation() {
                 )
             }
             composable("football_profile") {
-                ProfileScreen()
+                ProfileScreen(
+                    authViewModel = authViewModel,
+                    onNavigateToSignup = { navController.navigate("signup") }
+                )
             }
             composable("football_standings") {
                 FootballStandingsScreen()
@@ -116,7 +150,10 @@ fun AppNavigation() {
                 )
             }
             composable(BottomTab.PROFILE.route) {
-                ProfileScreen()
+                ProfileScreen(
+                    authViewModel = authViewModel,
+                    onNavigateToSignup = { navController.navigate("signup") }
+                )
             }
             composable(
                 route = "match/{matchId}",
@@ -171,3 +208,4 @@ fun AppNavigation() {
         }
     }
 }
+

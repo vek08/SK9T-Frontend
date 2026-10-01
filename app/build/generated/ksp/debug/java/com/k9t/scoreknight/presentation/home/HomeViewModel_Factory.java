@@ -1,5 +1,6 @@
 package com.k9t.scoreknight.presentation.home;
 
+import com.k9t.scoreknight.auth.data.TokenManager;
 import com.k9t.scoreknight.data.local.FavoritesManager;
 import com.k9t.scoreknight.domain.usecase.GetHomeMatchesUseCase;
 import dagger.internal.DaggerGenerated;
@@ -28,25 +29,30 @@ public final class HomeViewModel_Factory implements Factory<HomeViewModel> {
 
   private final Provider<FavoritesManager> favoritesManagerProvider;
 
+  private final Provider<TokenManager> tokenManagerProvider;
+
   public HomeViewModel_Factory(Provider<GetHomeMatchesUseCase> getHomeMatchesUseCaseProvider,
-      Provider<FavoritesManager> favoritesManagerProvider) {
+      Provider<FavoritesManager> favoritesManagerProvider,
+      Provider<TokenManager> tokenManagerProvider) {
     this.getHomeMatchesUseCaseProvider = getHomeMatchesUseCaseProvider;
     this.favoritesManagerProvider = favoritesManagerProvider;
+    this.tokenManagerProvider = tokenManagerProvider;
   }
 
   @Override
   public HomeViewModel get() {
-    return newInstance(getHomeMatchesUseCaseProvider.get(), favoritesManagerProvider.get());
+    return newInstance(getHomeMatchesUseCaseProvider.get(), favoritesManagerProvider.get(), tokenManagerProvider.get());
   }
 
   public static HomeViewModel_Factory create(
       Provider<GetHomeMatchesUseCase> getHomeMatchesUseCaseProvider,
-      Provider<FavoritesManager> favoritesManagerProvider) {
-    return new HomeViewModel_Factory(getHomeMatchesUseCaseProvider, favoritesManagerProvider);
+      Provider<FavoritesManager> favoritesManagerProvider,
+      Provider<TokenManager> tokenManagerProvider) {
+    return new HomeViewModel_Factory(getHomeMatchesUseCaseProvider, favoritesManagerProvider, tokenManagerProvider);
   }
 
   public static HomeViewModel newInstance(GetHomeMatchesUseCase getHomeMatchesUseCase,
-      FavoritesManager favoritesManager) {
-    return new HomeViewModel(getHomeMatchesUseCase, favoritesManager);
+      FavoritesManager favoritesManager, TokenManager tokenManager) {
+    return new HomeViewModel(getHomeMatchesUseCase, favoritesManager, tokenManager);
   }
 }

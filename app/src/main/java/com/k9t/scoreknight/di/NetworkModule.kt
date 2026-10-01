@@ -3,8 +3,11 @@ package com.k9t.scoreknight.di
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.k9t.scoreknight.BuildConfig
 import com.k9t.scoreknight.data.remote.api.CricketApiService
-import dagger.Module
 import com.k9t.scoreknight.football.data.remote.api.FootballApiService
+import com.k9t.scoreknight.auth.data.AuthApiService
+import com.k9t.scoreknight.auth.data.FavoritesApiService
+import com.k9t.scoreknight.auth.data.AuthInterceptor
+import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
@@ -26,46 +29,23 @@ object NetworkModule {
         return Json {
             ignoreUnknownKeys = true
             coerceInputValues = true
-        
-    @Provides
-    @Singleton
-    fun provideFootballApiService(retrofit: Retrofit): FootballApiService {
-        return retrofit.create(FootballApiService::class.java)
+        }
     }
-}
-    
-    @Provides
-    @Singleton
-    fun provideFootballApiService(retrofit: Retrofit): FootballApiService {
-        return retrofit.create(FootballApiService::class.java)
-    }
-}
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient {
+    fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
-        
-    @Provides
-    @Singleton
-    fun provideFootballApiService(retrofit: Retrofit): FootballApiService {
-        return retrofit.create(FootballApiService::class.java)
-    }
-}
+        }
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
+            .addInterceptor(authInterceptor)
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
             .build()
-    
-    @Provides
-    @Singleton
-    fun provideFootballApiService(retrofit: Retrofit): FootballApiService {
-        return retrofit.create(FootballApiService::class.java)
     }
-}
 
     @Provides
     @Singleton
@@ -76,29 +56,29 @@ object NetworkModule {
             .client(okHttpClient)
             .addConverterFactory(json.asConverterFactory(contentType))
             .build()
-    
-    @Provides
-    @Singleton
-    fun provideFootballApiService(retrofit: Retrofit): FootballApiService {
-        return retrofit.create(FootballApiService::class.java)
     }
-}
 
     @Provides
     @Singleton
     fun provideCricketApiService(retrofit: Retrofit): CricketApiService {
         return retrofit.create(CricketApiService::class.java)
-    
-    @Provides
-    @Singleton
-    fun provideFootballApiService(retrofit: Retrofit): FootballApiService {
-        return retrofit.create(FootballApiService::class.java)
     }
-}
 
     @Provides
     @Singleton
     fun provideFootballApiService(retrofit: Retrofit): FootballApiService {
         return retrofit.create(FootballApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuthApiService(retrofit: Retrofit): AuthApiService {
+        return retrofit.create(AuthApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFavoritesApiService(retrofit: Retrofit): FavoritesApiService {
+        return retrofit.create(FavoritesApiService::class.java)
     }
 }

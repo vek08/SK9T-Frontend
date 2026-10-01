@@ -65,71 +65,143 @@
 39            </intent-filter>
 40        </activity>
 41
-42        <provider
-42-->[androidx.emoji2:emoji2:1.3.0] C:\Users\vek\.gradle\caches\8.14.5\transforms\19e224eaed5ada75d3a7d64580da7d46\transformed\emoji2-1.3.0\AndroidManifest.xml:24:9-32:20
-43            android:name="androidx.startup.InitializationProvider"
-43-->[androidx.emoji2:emoji2:1.3.0] C:\Users\vek\.gradle\caches\8.14.5\transforms\19e224eaed5ada75d3a7d64580da7d46\transformed\emoji2-1.3.0\AndroidManifest.xml:25:13-67
-44            android:authorities="com.k9t.scoreknight.androidx-startup"
-44-->[androidx.emoji2:emoji2:1.3.0] C:\Users\vek\.gradle\caches\8.14.5\transforms\19e224eaed5ada75d3a7d64580da7d46\transformed\emoji2-1.3.0\AndroidManifest.xml:26:13-68
+42        <service
+42-->[androidx.credentials:credentials-play-services-auth:1.2.2] C:\Users\vek\.gradle\caches\8.14.5\transforms\9fd499f6e6818535a3ec9d1fba97fbe9\transformed\credentials-play-services-auth-1.2.2\AndroidManifest.xml:24:9-32:19
+43            android:name="androidx.credentials.playservices.CredentialProviderMetadataHolder"
+43-->[androidx.credentials:credentials-play-services-auth:1.2.2] C:\Users\vek\.gradle\caches\8.14.5\transforms\9fd499f6e6818535a3ec9d1fba97fbe9\transformed\credentials-play-services-auth-1.2.2\AndroidManifest.xml:25:13-94
+44            android:enabled="true"
+44-->[androidx.credentials:credentials-play-services-auth:1.2.2] C:\Users\vek\.gradle\caches\8.14.5\transforms\9fd499f6e6818535a3ec9d1fba97fbe9\transformed\credentials-play-services-auth-1.2.2\AndroidManifest.xml:26:13-35
 45            android:exported="false" >
-45-->[androidx.emoji2:emoji2:1.3.0] C:\Users\vek\.gradle\caches\8.14.5\transforms\19e224eaed5ada75d3a7d64580da7d46\transformed\emoji2-1.3.0\AndroidManifest.xml:27:13-37
+45-->[androidx.credentials:credentials-play-services-auth:1.2.2] C:\Users\vek\.gradle\caches\8.14.5\transforms\9fd499f6e6818535a3ec9d1fba97fbe9\transformed\credentials-play-services-auth-1.2.2\AndroidManifest.xml:27:13-37
 46            <meta-data
-46-->[androidx.emoji2:emoji2:1.3.0] C:\Users\vek\.gradle\caches\8.14.5\transforms\19e224eaed5ada75d3a7d64580da7d46\transformed\emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
-47                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-47-->[androidx.emoji2:emoji2:1.3.0] C:\Users\vek\.gradle\caches\8.14.5\transforms\19e224eaed5ada75d3a7d64580da7d46\transformed\emoji2-1.3.0\AndroidManifest.xml:30:17-75
-48                android:value="androidx.startup" />
-48-->[androidx.emoji2:emoji2:1.3.0] C:\Users\vek\.gradle\caches\8.14.5\transforms\19e224eaed5ada75d3a7d64580da7d46\transformed\emoji2-1.3.0\AndroidManifest.xml:31:17-49
-49            <meta-data
-49-->[androidx.lifecycle:lifecycle-process:2.8.2] C:\Users\vek\.gradle\caches\8.14.5\transforms\a79a410cb085d7d658585a05e2ed0953\transformed\lifecycle-process-2.8.2\AndroidManifest.xml:29:13-31:52
-50                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-50-->[androidx.lifecycle:lifecycle-process:2.8.2] C:\Users\vek\.gradle\caches\8.14.5\transforms\a79a410cb085d7d658585a05e2ed0953\transformed\lifecycle-process-2.8.2\AndroidManifest.xml:30:17-78
-51                android:value="androidx.startup" />
-51-->[androidx.lifecycle:lifecycle-process:2.8.2] C:\Users\vek\.gradle\caches\8.14.5\transforms\a79a410cb085d7d658585a05e2ed0953\transformed\lifecycle-process-2.8.2\AndroidManifest.xml:31:17-49
-52            <meta-data
-52-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
-53                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-53-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
-54                android:value="androidx.startup" />
-54-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
-55        </provider>
-56
-57        <receiver
-57-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
-58            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-58-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
-59            android:directBootAware="false"
-59-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
-60            android:enabled="true"
-60-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
-61            android:exported="true"
-61-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
-62            android:permission="android.permission.DUMP" >
-62-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
-63            <intent-filter>
-63-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
-64                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-64-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
-64-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
-65            </intent-filter>
-66            <intent-filter>
-66-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
-67                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-67-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
-67-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
-68            </intent-filter>
-69            <intent-filter>
-69-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
-70                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-70-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
-70-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
-71            </intent-filter>
-72            <intent-filter>
-72-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
-73                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-73-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
-73-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
-74            </intent-filter>
-75        </receiver>
-76    </application>
-77
-78</manifest>
+46-->[androidx.credentials:credentials-play-services-auth:1.2.2] C:\Users\vek\.gradle\caches\8.14.5\transforms\9fd499f6e6818535a3ec9d1fba97fbe9\transformed\credentials-play-services-auth-1.2.2\AndroidManifest.xml:29:13-31:104
+47                android:name="androidx.credentials.CREDENTIAL_PROVIDER_KEY"
+47-->[androidx.credentials:credentials-play-services-auth:1.2.2] C:\Users\vek\.gradle\caches\8.14.5\transforms\9fd499f6e6818535a3ec9d1fba97fbe9\transformed\credentials-play-services-auth-1.2.2\AndroidManifest.xml:30:17-76
+48                android:value="androidx.credentials.playservices.CredentialProviderPlayServicesImpl" />
+48-->[androidx.credentials:credentials-play-services-auth:1.2.2] C:\Users\vek\.gradle\caches\8.14.5\transforms\9fd499f6e6818535a3ec9d1fba97fbe9\transformed\credentials-play-services-auth-1.2.2\AndroidManifest.xml:31:17-101
+49        </service>
+50
+51        <activity
+51-->[androidx.credentials:credentials-play-services-auth:1.2.2] C:\Users\vek\.gradle\caches\8.14.5\transforms\9fd499f6e6818535a3ec9d1fba97fbe9\transformed\credentials-play-services-auth-1.2.2\AndroidManifest.xml:34:9-41:20
+52            android:name="androidx.credentials.playservices.HiddenActivity"
+52-->[androidx.credentials:credentials-play-services-auth:1.2.2] C:\Users\vek\.gradle\caches\8.14.5\transforms\9fd499f6e6818535a3ec9d1fba97fbe9\transformed\credentials-play-services-auth-1.2.2\AndroidManifest.xml:35:13-76
+53            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+53-->[androidx.credentials:credentials-play-services-auth:1.2.2] C:\Users\vek\.gradle\caches\8.14.5\transforms\9fd499f6e6818535a3ec9d1fba97fbe9\transformed\credentials-play-services-auth-1.2.2\AndroidManifest.xml:36:13-87
+54            android:enabled="true"
+54-->[androidx.credentials:credentials-play-services-auth:1.2.2] C:\Users\vek\.gradle\caches\8.14.5\transforms\9fd499f6e6818535a3ec9d1fba97fbe9\transformed\credentials-play-services-auth-1.2.2\AndroidManifest.xml:37:13-35
+55            android:exported="false"
+55-->[androidx.credentials:credentials-play-services-auth:1.2.2] C:\Users\vek\.gradle\caches\8.14.5\transforms\9fd499f6e6818535a3ec9d1fba97fbe9\transformed\credentials-play-services-auth-1.2.2\AndroidManifest.xml:38:13-37
+56            android:fitsSystemWindows="true"
+56-->[androidx.credentials:credentials-play-services-auth:1.2.2] C:\Users\vek\.gradle\caches\8.14.5\transforms\9fd499f6e6818535a3ec9d1fba97fbe9\transformed\credentials-play-services-auth-1.2.2\AndroidManifest.xml:39:13-45
+57            android:theme="@style/Theme.Hidden" >
+57-->[androidx.credentials:credentials-play-services-auth:1.2.2] C:\Users\vek\.gradle\caches\8.14.5\transforms\9fd499f6e6818535a3ec9d1fba97fbe9\transformed\credentials-play-services-auth-1.2.2\AndroidManifest.xml:40:13-48
+58        </activity>
+59        <activity
+59-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\vek\.gradle\caches\8.14.5\transforms\bae866ac4a3c00402187165530cea174\transformed\play-services-auth-20.7.0\AndroidManifest.xml:23:9-27:75
+60            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+60-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\vek\.gradle\caches\8.14.5\transforms\bae866ac4a3c00402187165530cea174\transformed\play-services-auth-20.7.0\AndroidManifest.xml:24:13-93
+61            android:excludeFromRecents="true"
+61-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\vek\.gradle\caches\8.14.5\transforms\bae866ac4a3c00402187165530cea174\transformed\play-services-auth-20.7.0\AndroidManifest.xml:25:13-46
+62            android:exported="false"
+62-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\vek\.gradle\caches\8.14.5\transforms\bae866ac4a3c00402187165530cea174\transformed\play-services-auth-20.7.0\AndroidManifest.xml:26:13-37
+63            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+63-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\vek\.gradle\caches\8.14.5\transforms\bae866ac4a3c00402187165530cea174\transformed\play-services-auth-20.7.0\AndroidManifest.xml:27:13-72
+64        <!--
+65            Service handling Google Sign-In user revocation. For apps that do not integrate with
+66            Google Sign-In, this service will never be started.
+67        -->
+68        <service
+68-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\vek\.gradle\caches\8.14.5\transforms\bae866ac4a3c00402187165530cea174\transformed\play-services-auth-20.7.0\AndroidManifest.xml:33:9-37:51
+69            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+69-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\vek\.gradle\caches\8.14.5\transforms\bae866ac4a3c00402187165530cea174\transformed\play-services-auth-20.7.0\AndroidManifest.xml:34:13-89
+70            android:exported="true"
+70-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\vek\.gradle\caches\8.14.5\transforms\bae866ac4a3c00402187165530cea174\transformed\play-services-auth-20.7.0\AndroidManifest.xml:35:13-36
+71            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+71-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\vek\.gradle\caches\8.14.5\transforms\bae866ac4a3c00402187165530cea174\transformed\play-services-auth-20.7.0\AndroidManifest.xml:36:13-107
+72            android:visibleToInstantApps="true" />
+72-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\vek\.gradle\caches\8.14.5\transforms\bae866ac4a3c00402187165530cea174\transformed\play-services-auth-20.7.0\AndroidManifest.xml:37:13-48
+73
+74        <activity
+74-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\2a21493f17ec14e96dda9c97f5498c74\transformed\play-services-base-18.0.1\AndroidManifest.xml:20:9-22:45
+75            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+75-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\2a21493f17ec14e96dda9c97f5498c74\transformed\play-services-base-18.0.1\AndroidManifest.xml:20:19-85
+76            android:exported="false"
+76-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\2a21493f17ec14e96dda9c97f5498c74\transformed\play-services-base-18.0.1\AndroidManifest.xml:22:19-43
+77            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+77-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\2a21493f17ec14e96dda9c97f5498c74\transformed\play-services-base-18.0.1\AndroidManifest.xml:21:19-78
+78
+79        <meta-data
+79-->[com.google.android.gms:play-services-basement:18.2.0] C:\Users\vek\.gradle\caches\8.14.5\transforms\ee83e647634150f96dd599c56a0fa862\transformed\play-services-basement-18.2.0\AndroidManifest.xml:21:9-23:69
+80            android:name="com.google.android.gms.version"
+80-->[com.google.android.gms:play-services-basement:18.2.0] C:\Users\vek\.gradle\caches\8.14.5\transforms\ee83e647634150f96dd599c56a0fa862\transformed\play-services-basement-18.2.0\AndroidManifest.xml:22:13-58
+81            android:value="@integer/google_play_services_version" />
+81-->[com.google.android.gms:play-services-basement:18.2.0] C:\Users\vek\.gradle\caches\8.14.5\transforms\ee83e647634150f96dd599c56a0fa862\transformed\play-services-basement-18.2.0\AndroidManifest.xml:23:13-66
+82
+83        <provider
+83-->[androidx.emoji2:emoji2:1.3.0] C:\Users\vek\.gradle\caches\8.14.5\transforms\19e224eaed5ada75d3a7d64580da7d46\transformed\emoji2-1.3.0\AndroidManifest.xml:24:9-32:20
+84            android:name="androidx.startup.InitializationProvider"
+84-->[androidx.emoji2:emoji2:1.3.0] C:\Users\vek\.gradle\caches\8.14.5\transforms\19e224eaed5ada75d3a7d64580da7d46\transformed\emoji2-1.3.0\AndroidManifest.xml:25:13-67
+85            android:authorities="com.k9t.scoreknight.androidx-startup"
+85-->[androidx.emoji2:emoji2:1.3.0] C:\Users\vek\.gradle\caches\8.14.5\transforms\19e224eaed5ada75d3a7d64580da7d46\transformed\emoji2-1.3.0\AndroidManifest.xml:26:13-68
+86            android:exported="false" >
+86-->[androidx.emoji2:emoji2:1.3.0] C:\Users\vek\.gradle\caches\8.14.5\transforms\19e224eaed5ada75d3a7d64580da7d46\transformed\emoji2-1.3.0\AndroidManifest.xml:27:13-37
+87            <meta-data
+87-->[androidx.emoji2:emoji2:1.3.0] C:\Users\vek\.gradle\caches\8.14.5\transforms\19e224eaed5ada75d3a7d64580da7d46\transformed\emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
+88                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+88-->[androidx.emoji2:emoji2:1.3.0] C:\Users\vek\.gradle\caches\8.14.5\transforms\19e224eaed5ada75d3a7d64580da7d46\transformed\emoji2-1.3.0\AndroidManifest.xml:30:17-75
+89                android:value="androidx.startup" />
+89-->[androidx.emoji2:emoji2:1.3.0] C:\Users\vek\.gradle\caches\8.14.5\transforms\19e224eaed5ada75d3a7d64580da7d46\transformed\emoji2-1.3.0\AndroidManifest.xml:31:17-49
+90            <meta-data
+90-->[androidx.lifecycle:lifecycle-process:2.8.2] C:\Users\vek\.gradle\caches\8.14.5\transforms\a79a410cb085d7d658585a05e2ed0953\transformed\lifecycle-process-2.8.2\AndroidManifest.xml:29:13-31:52
+91                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+91-->[androidx.lifecycle:lifecycle-process:2.8.2] C:\Users\vek\.gradle\caches\8.14.5\transforms\a79a410cb085d7d658585a05e2ed0953\transformed\lifecycle-process-2.8.2\AndroidManifest.xml:30:17-78
+92                android:value="androidx.startup" />
+92-->[androidx.lifecycle:lifecycle-process:2.8.2] C:\Users\vek\.gradle\caches\8.14.5\transforms\a79a410cb085d7d658585a05e2ed0953\transformed\lifecycle-process-2.8.2\AndroidManifest.xml:31:17-49
+93            <meta-data
+93-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
+94                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+94-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
+95                android:value="androidx.startup" />
+95-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
+96        </provider>
+97
+98        <receiver
+98-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
+99            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+99-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
+100            android:directBootAware="false"
+100-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
+101            android:enabled="true"
+101-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
+102            android:exported="true"
+102-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
+103            android:permission="android.permission.DUMP" >
+103-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
+104            <intent-filter>
+104-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
+105                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+105-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
+105-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
+106            </intent-filter>
+107            <intent-filter>
+107-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
+108                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+108-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
+108-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
+109            </intent-filter>
+110            <intent-filter>
+110-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
+111                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+111-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
+111-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
+112            </intent-filter>
+113            <intent-filter>
+113-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
+114                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+114-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
+114-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\vek\.gradle\caches\8.14.5\transforms\e7d2a698faf3932676a4d92575c304c7\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
+115            </intent-filter>
+116        </receiver>
+117    </application>
+118
+119</manifest>
