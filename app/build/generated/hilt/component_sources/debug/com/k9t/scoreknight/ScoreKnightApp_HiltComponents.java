@@ -2,6 +2,10 @@ package com.k9t.scoreknight;
 
 import com.k9t.scoreknight.di.NetworkModule;
 import com.k9t.scoreknight.di.RepositoryModule;
+import com.k9t.scoreknight.football.presentation.details.FootballMatchDetailsViewModel_HiltModules;
+import com.k9t.scoreknight.football.presentation.home.FootballHomeViewModel_HiltModules;
+import com.k9t.scoreknight.football.presentation.matches.FootballMatchesViewModel_HiltModules;
+import com.k9t.scoreknight.football.presentation.standings.FootballStandingsViewModel_HiltModules;
 import com.k9t.scoreknight.presentation.home.HomeViewModel_HiltModules;
 import com.k9t.scoreknight.presentation.matchdetails.MatchDetailsViewModel_HiltModules;
 import dagger.Binds;
@@ -156,6 +160,10 @@ public final class ScoreKnightApp_HiltComponents {
 
   @Subcomponent(
       modules = {
+          FootballHomeViewModel_HiltModules.KeyModule.class,
+          FootballMatchDetailsViewModel_HiltModules.KeyModule.class,
+          FootballMatchesViewModel_HiltModules.KeyModule.class,
+          FootballStandingsViewModel_HiltModules.KeyModule.class,
           HiltWrapper_ActivityRetainedComponentManager_LifecycleModule.class,
           HiltWrapper_SavedStateHandleModule.class,
           HomeViewModel_HiltModules.KeyModule.class,
@@ -197,6 +205,10 @@ public final class ScoreKnightApp_HiltComponents {
 
   @Subcomponent(
       modules = {
+          FootballHomeViewModel_HiltModules.BindsModule.class,
+          FootballMatchDetailsViewModel_HiltModules.BindsModule.class,
+          FootballMatchesViewModel_HiltModules.BindsModule.class,
+          FootballStandingsViewModel_HiltModules.BindsModule.class,
           HiltWrapper_HiltViewModelFactory_ViewModelModule.class,
           HomeViewModel_HiltModules.BindsModule.class,
           MatchDetailsViewModel_HiltModules.BindsModule.class

@@ -10,11 +10,26 @@ import com.k9t.scoreknight.data.local.FavoritesManager;
 import com.k9t.scoreknight.data.remote.api.CricketApiService;
 import com.k9t.scoreknight.data.repository.CricketRepositoryImpl;
 import com.k9t.scoreknight.di.NetworkModule_ProvideCricketApiServiceFactory;
+import com.k9t.scoreknight.di.NetworkModule_ProvideFootballApiServiceFactory;
 import com.k9t.scoreknight.di.NetworkModule_ProvideJsonFactory;
 import com.k9t.scoreknight.di.NetworkModule_ProvideOkHttpClientFactory;
 import com.k9t.scoreknight.di.NetworkModule_ProvideRetrofitFactory;
 import com.k9t.scoreknight.domain.repository.CricketRepository;
 import com.k9t.scoreknight.domain.usecase.GetHomeMatchesUseCase;
+import com.k9t.scoreknight.football.data.remote.api.FootballApiService;
+import com.k9t.scoreknight.football.data.repository.FootballRepositoryImpl;
+import com.k9t.scoreknight.football.domain.repository.FootballRepository;
+import com.k9t.scoreknight.football.domain.usecase.GetFootballHomeMatchesUseCase;
+import com.k9t.scoreknight.football.domain.usecase.GetFootballMatchDetailsUseCase;
+import com.k9t.scoreknight.football.domain.usecase.GetFootballStandingsUseCase;
+import com.k9t.scoreknight.football.presentation.details.FootballMatchDetailsViewModel;
+import com.k9t.scoreknight.football.presentation.details.FootballMatchDetailsViewModel_HiltModules;
+import com.k9t.scoreknight.football.presentation.home.FootballHomeViewModel;
+import com.k9t.scoreknight.football.presentation.home.FootballHomeViewModel_HiltModules;
+import com.k9t.scoreknight.football.presentation.matches.FootballMatchesViewModel;
+import com.k9t.scoreknight.football.presentation.matches.FootballMatchesViewModel_HiltModules;
+import com.k9t.scoreknight.football.presentation.standings.FootballStandingsViewModel;
+import com.k9t.scoreknight.football.presentation.standings.FootballStandingsViewModel_HiltModules;
 import com.k9t.scoreknight.presentation.home.HomeViewModel;
 import com.k9t.scoreknight.presentation.home.HomeViewModel_HiltModules;
 import com.k9t.scoreknight.presentation.matchdetails.MatchDetailsViewModel;
@@ -382,7 +397,7 @@ public final class DaggerScoreKnightApp_HiltComponents_SingletonC {
 
     @Override
     public Map<Class<?>, Boolean> getViewModelKeys() {
-      return LazyClassKeyMap.<Boolean>of(MapBuilder.<String, Boolean>newMapBuilder(2).put(LazyClassKeyProvider.com_k9t_scoreknight_presentation_home_HomeViewModel, HomeViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_k9t_scoreknight_presentation_matchdetails_MatchDetailsViewModel, MatchDetailsViewModel_HiltModules.KeyModule.provide()).build());
+      return LazyClassKeyMap.<Boolean>of(MapBuilder.<String, Boolean>newMapBuilder(6).put(LazyClassKeyProvider.com_k9t_scoreknight_football_presentation_home_FootballHomeViewModel, FootballHomeViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_k9t_scoreknight_football_presentation_details_FootballMatchDetailsViewModel, FootballMatchDetailsViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_k9t_scoreknight_football_presentation_matches_FootballMatchesViewModel, FootballMatchesViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_k9t_scoreknight_football_presentation_standings_FootballStandingsViewModel, FootballStandingsViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_k9t_scoreknight_presentation_home_HomeViewModel, HomeViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_k9t_scoreknight_presentation_matchdetails_MatchDetailsViewModel, MatchDetailsViewModel_HiltModules.KeyModule.provide()).build());
     }
 
     @Override
@@ -406,11 +421,31 @@ public final class DaggerScoreKnightApp_HiltComponents_SingletonC {
 
       static String com_k9t_scoreknight_presentation_home_HomeViewModel = "com.k9t.scoreknight.presentation.home.HomeViewModel";
 
+      static String com_k9t_scoreknight_football_presentation_standings_FootballStandingsViewModel = "com.k9t.scoreknight.football.presentation.standings.FootballStandingsViewModel";
+
+      static String com_k9t_scoreknight_football_presentation_details_FootballMatchDetailsViewModel = "com.k9t.scoreknight.football.presentation.details.FootballMatchDetailsViewModel";
+
+      static String com_k9t_scoreknight_football_presentation_home_FootballHomeViewModel = "com.k9t.scoreknight.football.presentation.home.FootballHomeViewModel";
+
+      static String com_k9t_scoreknight_football_presentation_matches_FootballMatchesViewModel = "com.k9t.scoreknight.football.presentation.matches.FootballMatchesViewModel";
+
       @KeepFieldType
       MatchDetailsViewModel com_k9t_scoreknight_presentation_matchdetails_MatchDetailsViewModel2;
 
       @KeepFieldType
       HomeViewModel com_k9t_scoreknight_presentation_home_HomeViewModel2;
+
+      @KeepFieldType
+      FootballStandingsViewModel com_k9t_scoreknight_football_presentation_standings_FootballStandingsViewModel2;
+
+      @KeepFieldType
+      FootballMatchDetailsViewModel com_k9t_scoreknight_football_presentation_details_FootballMatchDetailsViewModel2;
+
+      @KeepFieldType
+      FootballHomeViewModel com_k9t_scoreknight_football_presentation_home_FootballHomeViewModel2;
+
+      @KeepFieldType
+      FootballMatchesViewModel com_k9t_scoreknight_football_presentation_matches_FootballMatchesViewModel2;
     }
   }
 
@@ -422,6 +457,14 @@ public final class DaggerScoreKnightApp_HiltComponents_SingletonC {
     private final ActivityRetainedCImpl activityRetainedCImpl;
 
     private final ViewModelCImpl viewModelCImpl = this;
+
+    private Provider<FootballHomeViewModel> footballHomeViewModelProvider;
+
+    private Provider<FootballMatchDetailsViewModel> footballMatchDetailsViewModelProvider;
+
+    private Provider<FootballMatchesViewModel> footballMatchesViewModelProvider;
+
+    private Provider<FootballStandingsViewModel> footballStandingsViewModelProvider;
 
     private Provider<HomeViewModel> homeViewModelProvider;
 
@@ -437,6 +480,18 @@ public final class DaggerScoreKnightApp_HiltComponents_SingletonC {
 
     }
 
+    private GetFootballHomeMatchesUseCase getFootballHomeMatchesUseCase() {
+      return new GetFootballHomeMatchesUseCase(singletonCImpl.bindFootballRepositoryProvider.get());
+    }
+
+    private GetFootballMatchDetailsUseCase getFootballMatchDetailsUseCase() {
+      return new GetFootballMatchDetailsUseCase(singletonCImpl.bindFootballRepositoryProvider.get());
+    }
+
+    private GetFootballStandingsUseCase getFootballStandingsUseCase() {
+      return new GetFootballStandingsUseCase(singletonCImpl.bindFootballRepositoryProvider.get());
+    }
+
     private GetHomeMatchesUseCase getHomeMatchesUseCase() {
       return new GetHomeMatchesUseCase(singletonCImpl.bindCricketRepositoryProvider.get());
     }
@@ -444,13 +499,17 @@ public final class DaggerScoreKnightApp_HiltComponents_SingletonC {
     @SuppressWarnings("unchecked")
     private void initialize(final SavedStateHandle savedStateHandleParam,
         final ViewModelLifecycle viewModelLifecycleParam) {
-      this.homeViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 0);
-      this.matchDetailsViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 1);
+      this.footballHomeViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 0);
+      this.footballMatchDetailsViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 1);
+      this.footballMatchesViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 2);
+      this.footballStandingsViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 3);
+      this.homeViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 4);
+      this.matchDetailsViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 5);
     }
 
     @Override
     public Map<Class<?>, javax.inject.Provider<ViewModel>> getHiltViewModelMap() {
-      return LazyClassKeyMap.<javax.inject.Provider<ViewModel>>of(MapBuilder.<String, javax.inject.Provider<ViewModel>>newMapBuilder(2).put(LazyClassKeyProvider.com_k9t_scoreknight_presentation_home_HomeViewModel, ((Provider) homeViewModelProvider)).put(LazyClassKeyProvider.com_k9t_scoreknight_presentation_matchdetails_MatchDetailsViewModel, ((Provider) matchDetailsViewModelProvider)).build());
+      return LazyClassKeyMap.<javax.inject.Provider<ViewModel>>of(MapBuilder.<String, javax.inject.Provider<ViewModel>>newMapBuilder(6).put(LazyClassKeyProvider.com_k9t_scoreknight_football_presentation_home_FootballHomeViewModel, ((Provider) footballHomeViewModelProvider)).put(LazyClassKeyProvider.com_k9t_scoreknight_football_presentation_details_FootballMatchDetailsViewModel, ((Provider) footballMatchDetailsViewModelProvider)).put(LazyClassKeyProvider.com_k9t_scoreknight_football_presentation_matches_FootballMatchesViewModel, ((Provider) footballMatchesViewModelProvider)).put(LazyClassKeyProvider.com_k9t_scoreknight_football_presentation_standings_FootballStandingsViewModel, ((Provider) footballStandingsViewModelProvider)).put(LazyClassKeyProvider.com_k9t_scoreknight_presentation_home_HomeViewModel, ((Provider) homeViewModelProvider)).put(LazyClassKeyProvider.com_k9t_scoreknight_presentation_matchdetails_MatchDetailsViewModel, ((Provider) matchDetailsViewModelProvider)).build());
     }
 
     @Override
@@ -460,15 +519,35 @@ public final class DaggerScoreKnightApp_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
+      static String com_k9t_scoreknight_presentation_matchdetails_MatchDetailsViewModel = "com.k9t.scoreknight.presentation.matchdetails.MatchDetailsViewModel";
+
+      static String com_k9t_scoreknight_football_presentation_home_FootballHomeViewModel = "com.k9t.scoreknight.football.presentation.home.FootballHomeViewModel";
+
+      static String com_k9t_scoreknight_football_presentation_standings_FootballStandingsViewModel = "com.k9t.scoreknight.football.presentation.standings.FootballStandingsViewModel";
+
+      static String com_k9t_scoreknight_football_presentation_details_FootballMatchDetailsViewModel = "com.k9t.scoreknight.football.presentation.details.FootballMatchDetailsViewModel";
+
       static String com_k9t_scoreknight_presentation_home_HomeViewModel = "com.k9t.scoreknight.presentation.home.HomeViewModel";
 
-      static String com_k9t_scoreknight_presentation_matchdetails_MatchDetailsViewModel = "com.k9t.scoreknight.presentation.matchdetails.MatchDetailsViewModel";
+      static String com_k9t_scoreknight_football_presentation_matches_FootballMatchesViewModel = "com.k9t.scoreknight.football.presentation.matches.FootballMatchesViewModel";
+
+      @KeepFieldType
+      MatchDetailsViewModel com_k9t_scoreknight_presentation_matchdetails_MatchDetailsViewModel2;
+
+      @KeepFieldType
+      FootballHomeViewModel com_k9t_scoreknight_football_presentation_home_FootballHomeViewModel2;
+
+      @KeepFieldType
+      FootballStandingsViewModel com_k9t_scoreknight_football_presentation_standings_FootballStandingsViewModel2;
+
+      @KeepFieldType
+      FootballMatchDetailsViewModel com_k9t_scoreknight_football_presentation_details_FootballMatchDetailsViewModel2;
 
       @KeepFieldType
       HomeViewModel com_k9t_scoreknight_presentation_home_HomeViewModel2;
 
       @KeepFieldType
-      MatchDetailsViewModel com_k9t_scoreknight_presentation_matchdetails_MatchDetailsViewModel2;
+      FootballMatchesViewModel com_k9t_scoreknight_football_presentation_matches_FootballMatchesViewModel2;
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
@@ -492,10 +571,22 @@ public final class DaggerScoreKnightApp_HiltComponents_SingletonC {
       @Override
       public T get() {
         switch (id) {
-          case 0: // com.k9t.scoreknight.presentation.home.HomeViewModel 
+          case 0: // com.k9t.scoreknight.football.presentation.home.FootballHomeViewModel 
+          return (T) new FootballHomeViewModel(viewModelCImpl.getFootballHomeMatchesUseCase());
+
+          case 1: // com.k9t.scoreknight.football.presentation.details.FootballMatchDetailsViewModel 
+          return (T) new FootballMatchDetailsViewModel(viewModelCImpl.getFootballMatchDetailsUseCase(), viewModelCImpl.savedStateHandle);
+
+          case 2: // com.k9t.scoreknight.football.presentation.matches.FootballMatchesViewModel 
+          return (T) new FootballMatchesViewModel(singletonCImpl.bindFootballRepositoryProvider.get());
+
+          case 3: // com.k9t.scoreknight.football.presentation.standings.FootballStandingsViewModel 
+          return (T) new FootballStandingsViewModel(viewModelCImpl.getFootballStandingsUseCase());
+
+          case 4: // com.k9t.scoreknight.presentation.home.HomeViewModel 
           return (T) new HomeViewModel(viewModelCImpl.getHomeMatchesUseCase(), singletonCImpl.favoritesManagerProvider.get());
 
-          case 1: // com.k9t.scoreknight.presentation.matchdetails.MatchDetailsViewModel 
+          case 5: // com.k9t.scoreknight.presentation.matchdetails.MatchDetailsViewModel 
           return (T) new MatchDetailsViewModel(singletonCImpl.bindCricketRepositoryProvider.get(), singletonCImpl.favoritesManagerProvider.get(), viewModelCImpl.savedStateHandle);
 
           default: throw new AssertionError(id);
@@ -584,6 +675,12 @@ public final class DaggerScoreKnightApp_HiltComponents_SingletonC {
 
     private Provider<Retrofit> provideRetrofitProvider;
 
+    private Provider<FootballApiService> provideFootballApiServiceProvider;
+
+    private Provider<FootballRepositoryImpl> footballRepositoryImplProvider;
+
+    private Provider<FootballRepository> bindFootballRepositoryProvider;
+
     private Provider<CricketApiService> provideCricketApiServiceProvider;
 
     private Provider<CricketRepositoryImpl> cricketRepositoryImplProvider;
@@ -603,10 +700,13 @@ public final class DaggerScoreKnightApp_HiltComponents_SingletonC {
       this.provideOkHttpClientProvider = DoubleCheck.provider(new SwitchingProvider<OkHttpClient>(singletonCImpl, 3));
       this.provideJsonProvider = DoubleCheck.provider(new SwitchingProvider<Json>(singletonCImpl, 4));
       this.provideRetrofitProvider = DoubleCheck.provider(new SwitchingProvider<Retrofit>(singletonCImpl, 2));
-      this.provideCricketApiServiceProvider = DoubleCheck.provider(new SwitchingProvider<CricketApiService>(singletonCImpl, 1));
-      this.cricketRepositoryImplProvider = new SwitchingProvider<>(singletonCImpl, 0);
+      this.provideFootballApiServiceProvider = DoubleCheck.provider(new SwitchingProvider<FootballApiService>(singletonCImpl, 1));
+      this.footballRepositoryImplProvider = new SwitchingProvider<>(singletonCImpl, 0);
+      this.bindFootballRepositoryProvider = DoubleCheck.provider((Provider) footballRepositoryImplProvider);
+      this.provideCricketApiServiceProvider = DoubleCheck.provider(new SwitchingProvider<CricketApiService>(singletonCImpl, 6));
+      this.cricketRepositoryImplProvider = new SwitchingProvider<>(singletonCImpl, 5);
       this.bindCricketRepositoryProvider = DoubleCheck.provider((Provider) cricketRepositoryImplProvider);
-      this.favoritesManagerProvider = DoubleCheck.provider(new SwitchingProvider<FavoritesManager>(singletonCImpl, 5));
+      this.favoritesManagerProvider = DoubleCheck.provider(new SwitchingProvider<FavoritesManager>(singletonCImpl, 7));
     }
 
     @Override
@@ -642,11 +742,11 @@ public final class DaggerScoreKnightApp_HiltComponents_SingletonC {
       @Override
       public T get() {
         switch (id) {
-          case 0: // com.k9t.scoreknight.data.repository.CricketRepositoryImpl 
-          return (T) new CricketRepositoryImpl(singletonCImpl.provideCricketApiServiceProvider.get());
+          case 0: // com.k9t.scoreknight.football.data.repository.FootballRepositoryImpl 
+          return (T) new FootballRepositoryImpl(singletonCImpl.provideFootballApiServiceProvider.get());
 
-          case 1: // com.k9t.scoreknight.data.remote.api.CricketApiService 
-          return (T) NetworkModule_ProvideCricketApiServiceFactory.provideCricketApiService(singletonCImpl.provideRetrofitProvider.get());
+          case 1: // com.k9t.scoreknight.football.data.remote.api.FootballApiService 
+          return (T) NetworkModule_ProvideFootballApiServiceFactory.provideFootballApiService(singletonCImpl.provideRetrofitProvider.get());
 
           case 2: // retrofit2.Retrofit 
           return (T) NetworkModule_ProvideRetrofitFactory.provideRetrofit(singletonCImpl.provideOkHttpClientProvider.get(), singletonCImpl.provideJsonProvider.get());
@@ -657,7 +757,13 @@ public final class DaggerScoreKnightApp_HiltComponents_SingletonC {
           case 4: // kotlinx.serialization.json.Json 
           return (T) NetworkModule_ProvideJsonFactory.provideJson();
 
-          case 5: // com.k9t.scoreknight.data.local.FavoritesManager 
+          case 5: // com.k9t.scoreknight.data.repository.CricketRepositoryImpl 
+          return (T) new CricketRepositoryImpl(singletonCImpl.provideCricketApiServiceProvider.get());
+
+          case 6: // com.k9t.scoreknight.data.remote.api.CricketApiService 
+          return (T) NetworkModule_ProvideCricketApiServiceFactory.provideCricketApiService(singletonCImpl.provideRetrofitProvider.get());
+
+          case 7: // com.k9t.scoreknight.data.local.FavoritesManager 
           return (T) new FavoritesManager(ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule));
 
           default: throw new AssertionError(id);

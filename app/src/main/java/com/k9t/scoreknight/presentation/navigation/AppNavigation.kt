@@ -22,9 +22,13 @@ import com.k9t.scoreknight.presentation.matches.MatchesScreen
 import com.k9t.scoreknight.presentation.matchdetails.MatchDetailsScreen
 import com.k9t.scoreknight.presentation.profile.ProfileScreen
 import com.k9t.scoreknight.presentation.landing.ScoreKnightLandingScreen
-import com.k9t.scoreknight.presentation.football.FootballHomeScreen
+import com.k9t.scoreknight.football.presentation.home.FootballHomeScreen
+import com.k9t.scoreknight.football.presentation.matches.FootballMatchesScreen
+import com.k9t.scoreknight.football.presentation.details.FootballMatchDetailsScreen
+import com.k9t.scoreknight.football.presentation.standings.FootballStandingsScreen
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import com.k9t.scoreknight.football.presentation.details.FootballMatchDetailsViewModel
 
 @OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class, androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
@@ -35,6 +39,7 @@ fun AppNavigation() {
 
     // Create a shared ViewModel scoped to the AppNavigation (NavHost parent)
     val sharedViewModel: HomeViewModel = hiltViewModel()
+    val sharedFootballViewModel: com.k9t.scoreknight.football.presentation.home.FootballHomeViewModel = hiltViewModel()
 
     Box(modifier = Modifier.fillMaxSize()) {
         NavHost(
@@ -49,7 +54,25 @@ fun AppNavigation() {
                 )
             }
             composable("football_home") {
-                FootballHomeScreen(
+                FootballHomeScreen(viewModel = sharedFootballViewModel,
+                    onNavigateToMatchDetails = { id -> navController.navigate("football_match/$id") }
+                )
+            }
+            composable("football_matches") {
+                FootballMatchesScreen(viewModel = sharedFootballViewModel,
+                    onNavigateToMatchDetails = { id -> navController.navigate("football_match/$id") }
+                )
+            }
+            composable("football_standings") {
+                FootballStandingsScreen()
+            }
+            composable(
+                "football_match/{matchId}",
+                arguments = listOf(navArgument("matchId") { type = NavType.StringType })
+            ) {
+                val footballMatchDetailsViewModel: FootballMatchDetailsViewModel = hiltViewModel()
+                FootballMatchDetailsScreen(
+                    viewModel = footballMatchDetailsViewModel,
                     onBackClick = { navController.popBackStack() }
                 )
             }
@@ -92,12 +115,33 @@ fun AppNavigation() {
                 }
             }
         
-        val shouldShowBottomBar = currentRoute in BottomTab.values().map { it.route }
+        val isFootballRoute = currentRoute.startsWith("football_")
+        val isDetailRoute = currentRoute.startsWith("match/") || currentRoute.startsWith("football_match/")
+        val shouldShowBottomBar = (currentRoute in BottomTab.values().map { it.route } || isFootballRoute) && !isDetailRoute && currentRoute != "landing"
+        
+        val bottomBarRoute = when {
+            currentRoute == "football_home" -> "home"
+            currentRoute == "football_matches" -> "matches"
+            currentRoute == "football_standings" -> "live"
+            else -> currentRoute
+        }
+
         if (shouldShowBottomBar) {
             ScoreKnightBottomBar(
-                currentRoute = currentRoute,
+                currentRoute = bottomBarRoute,
                 onNavigate = { tab ->
-                    navController.navigate(tab.route) {
+                    val targetRoute = if (isFootballRoute) {
+                        when (tab) {
+                            BottomTab.HOME -> "football_home"
+                            BottomTab.MATCHES -> "football_matches"
+                            BottomTab.LIVE -> "football_standings"
+                            BottomTab.FAVORITES -> "football_home"
+                            BottomTab.PROFILE -> "football_home"
+                        }
+                    } else {
+                        tab.route
+                    }
+                    navController.navigate(targetRoute) {
                         popUpTo(navController.graph.startDestinationId) {
                             saveState = true
                         }
@@ -110,3 +154,7 @@ fun AppNavigation() {
         }
     }
 }
+
+
+
+
