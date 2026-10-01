@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ScoreKnight</string>
+    <string name="default_web_client_id" translatable="false">163106804900-cn3ga5p8m14qddc1r50m0fa61ohbuhlm.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">163106804900</string>
+    <string name="google_api_key" translatable="false">AIzaSyBwCqYv7W8x8h6maUDfNP8sFsJfD_0Bd1Y</string>
+    <string name="google_app_id" translatable="false">1:163106804900:android:0e9db44d33345941374231</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBwCqYv7W8x8h6maUDfNP8sFsJfD_0Bd1Y</string>
+    <string name="google_storage_bucket" translatable="false">sk9t-85800.firebasestorage.app</string>
+    <string name="project_id" translatable="false">sk9t-85800</string>
     <style name="Theme.ScoreKnight" parent="android:Theme.Material.Light.NoActionBar"/>
 </resources>

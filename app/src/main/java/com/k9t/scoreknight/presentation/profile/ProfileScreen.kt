@@ -57,7 +57,7 @@ fun AuthenticatedProfileScreen(authViewModel: AuthViewModel) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .background(MaterialTheme.colorScheme.background)
+                .background(androidx.compose.ui.graphics.Color.White)
                 .verticalScroll(scrollState)
                 .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 120.dp),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -227,3 +227,4 @@ private fun SettingsItem(
         }
     }
 }
+

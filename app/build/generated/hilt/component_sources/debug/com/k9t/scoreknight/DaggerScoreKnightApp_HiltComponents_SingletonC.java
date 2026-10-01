@@ -426,19 +426,25 @@ public final class DaggerScoreKnightApp_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
+      static String com_k9t_scoreknight_football_presentation_standings_FootballStandingsViewModel = "com.k9t.scoreknight.football.presentation.standings.FootballStandingsViewModel";
+
+      static String com_k9t_scoreknight_presentation_home_HomeViewModel = "com.k9t.scoreknight.presentation.home.HomeViewModel";
+
       static String com_k9t_scoreknight_football_presentation_home_FootballHomeViewModel = "com.k9t.scoreknight.football.presentation.home.FootballHomeViewModel";
 
       static String com_k9t_scoreknight_football_presentation_details_FootballMatchDetailsViewModel = "com.k9t.scoreknight.football.presentation.details.FootballMatchDetailsViewModel";
 
-      static String com_k9t_scoreknight_presentation_home_HomeViewModel = "com.k9t.scoreknight.presentation.home.HomeViewModel";
+      static String com_k9t_scoreknight_auth_presentation_AuthViewModel = "com.k9t.scoreknight.auth.presentation.AuthViewModel";
 
       static String com_k9t_scoreknight_football_presentation_matches_FootballMatchesViewModel = "com.k9t.scoreknight.football.presentation.matches.FootballMatchesViewModel";
 
-      static String com_k9t_scoreknight_auth_presentation_AuthViewModel = "com.k9t.scoreknight.auth.presentation.AuthViewModel";
-
       static String com_k9t_scoreknight_presentation_matchdetails_MatchDetailsViewModel = "com.k9t.scoreknight.presentation.matchdetails.MatchDetailsViewModel";
 
-      static String com_k9t_scoreknight_football_presentation_standings_FootballStandingsViewModel = "com.k9t.scoreknight.football.presentation.standings.FootballStandingsViewModel";
+      @KeepFieldType
+      FootballStandingsViewModel com_k9t_scoreknight_football_presentation_standings_FootballStandingsViewModel2;
+
+      @KeepFieldType
+      HomeViewModel com_k9t_scoreknight_presentation_home_HomeViewModel2;
 
       @KeepFieldType
       FootballHomeViewModel com_k9t_scoreknight_football_presentation_home_FootballHomeViewModel2;
@@ -447,19 +453,13 @@ public final class DaggerScoreKnightApp_HiltComponents_SingletonC {
       FootballMatchDetailsViewModel com_k9t_scoreknight_football_presentation_details_FootballMatchDetailsViewModel2;
 
       @KeepFieldType
-      HomeViewModel com_k9t_scoreknight_presentation_home_HomeViewModel2;
+      AuthViewModel com_k9t_scoreknight_auth_presentation_AuthViewModel2;
 
       @KeepFieldType
       FootballMatchesViewModel com_k9t_scoreknight_football_presentation_matches_FootballMatchesViewModel2;
 
       @KeepFieldType
-      AuthViewModel com_k9t_scoreknight_auth_presentation_AuthViewModel2;
-
-      @KeepFieldType
       MatchDetailsViewModel com_k9t_scoreknight_presentation_matchdetails_MatchDetailsViewModel2;
-
-      @KeepFieldType
-      FootballStandingsViewModel com_k9t_scoreknight_football_presentation_standings_FootballStandingsViewModel2;
     }
   }
 
@@ -536,28 +536,19 @@ public final class DaggerScoreKnightApp_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
-      static String com_k9t_scoreknight_football_presentation_matches_FootballMatchesViewModel = "com.k9t.scoreknight.football.presentation.matches.FootballMatchesViewModel";
+      static String com_k9t_scoreknight_presentation_matchdetails_MatchDetailsViewModel = "com.k9t.scoreknight.presentation.matchdetails.MatchDetailsViewModel";
+
+      static String com_k9t_scoreknight_football_presentation_home_FootballHomeViewModel = "com.k9t.scoreknight.football.presentation.home.FootballHomeViewModel";
 
       static String com_k9t_scoreknight_football_presentation_standings_FootballStandingsViewModel = "com.k9t.scoreknight.football.presentation.standings.FootballStandingsViewModel";
 
       static String com_k9t_scoreknight_auth_presentation_AuthViewModel = "com.k9t.scoreknight.auth.presentation.AuthViewModel";
 
-      static String com_k9t_scoreknight_presentation_matchdetails_MatchDetailsViewModel = "com.k9t.scoreknight.presentation.matchdetails.MatchDetailsViewModel";
-
-      static String com_k9t_scoreknight_football_presentation_home_FootballHomeViewModel = "com.k9t.scoreknight.football.presentation.home.FootballHomeViewModel";
-
       static String com_k9t_scoreknight_football_presentation_details_FootballMatchDetailsViewModel = "com.k9t.scoreknight.football.presentation.details.FootballMatchDetailsViewModel";
 
+      static String com_k9t_scoreknight_football_presentation_matches_FootballMatchesViewModel = "com.k9t.scoreknight.football.presentation.matches.FootballMatchesViewModel";
+
       static String com_k9t_scoreknight_presentation_home_HomeViewModel = "com.k9t.scoreknight.presentation.home.HomeViewModel";
-
-      @KeepFieldType
-      FootballMatchesViewModel com_k9t_scoreknight_football_presentation_matches_FootballMatchesViewModel2;
-
-      @KeepFieldType
-      FootballStandingsViewModel com_k9t_scoreknight_football_presentation_standings_FootballStandingsViewModel2;
-
-      @KeepFieldType
-      AuthViewModel com_k9t_scoreknight_auth_presentation_AuthViewModel2;
 
       @KeepFieldType
       MatchDetailsViewModel com_k9t_scoreknight_presentation_matchdetails_MatchDetailsViewModel2;
@@ -566,7 +557,16 @@ public final class DaggerScoreKnightApp_HiltComponents_SingletonC {
       FootballHomeViewModel com_k9t_scoreknight_football_presentation_home_FootballHomeViewModel2;
 
       @KeepFieldType
+      FootballStandingsViewModel com_k9t_scoreknight_football_presentation_standings_FootballStandingsViewModel2;
+
+      @KeepFieldType
+      AuthViewModel com_k9t_scoreknight_auth_presentation_AuthViewModel2;
+
+      @KeepFieldType
       FootballMatchDetailsViewModel com_k9t_scoreknight_football_presentation_details_FootballMatchDetailsViewModel2;
+
+      @KeepFieldType
+      FootballMatchesViewModel com_k9t_scoreknight_football_presentation_matches_FootballMatchesViewModel2;
 
       @KeepFieldType
       HomeViewModel com_k9t_scoreknight_presentation_home_HomeViewModel2;

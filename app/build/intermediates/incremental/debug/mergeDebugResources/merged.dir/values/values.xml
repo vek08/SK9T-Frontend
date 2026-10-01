@@ -143,7 +143,13 @@
     <string name="common_signin_button_text_long">Sign in with Google</string>
     <string name="default_error_message">"Invalid input"</string>
     <string name="default_popup_window_title" ns2:ignore="ExtraTranslation">"Pop-Up Window"</string>
+    <string name="default_web_client_id" translatable="false">163106804900-cn3ga5p8m14qddc1r50m0fa61ohbuhlm.apps.googleusercontent.com</string>
     <string name="dropdown_menu">"Dropdown menu"</string>
+    <string name="gcm_defaultSenderId" translatable="false">163106804900</string>
+    <string name="google_api_key" translatable="false">AIzaSyBwCqYv7W8x8h6maUDfNP8sFsJfD_0Bd1Y</string>
+    <string name="google_app_id" translatable="false">1:163106804900:android:0e9db44d33345941374231</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBwCqYv7W8x8h6maUDfNP8sFsJfD_0Bd1Y</string>
+    <string name="google_storage_bucket" translatable="false">sk9t-85800.firebasestorage.app</string>
     <string name="in_progress">In progress</string>
     <string name="indeterminate">Partially checked</string>
     <string name="m3c_bottom_sheet_collapse_description">Collapse bottom sheet</string>
@@ -210,6 +216,7 @@
     <string name="not_selected">Not selected</string>
     <string name="off">Off</string>
     <string name="on">On</string>
+    <string name="project_id" translatable="false">sk9t-85800</string>
     <string name="range_end">"Range end"</string>
     <string name="range_start">"Range start"</string>
     <string name="selected">Selected</string>
@@ -313,23 +320,14 @@
         <attr format="reference" name="fontProviderCerts"/>
         
         <attr name="fontProviderFetchStrategy">
-            <!-- The blocking font fetch works as follows.
-              First, check the local cache, then if the requested font is not cached, request the
-              font from the provider and wait until it is finished.  You can change the length of
-              the timeout by modifying fontProviderFetchTimeout.  If the timeout happens, the
-              default typeface will be used instead. -->
+            
             <enum name="blocking" value="0"/>
-            <!-- The async font fetch works as follows.
-              First, check the local cache, then if the requeted font is not cached, trigger a
-              request the font and continue with layout inflation. Once the font fetch succeeds, the
-              target text view will be refreshed with the downloaded font data. The
-              fontProviderFetchTimeout will be ignored if async loading is specified. -->
+            
             <enum name="async" value="1"/>
         </attr>
         
         <attr format="integer" name="fontProviderFetchTimeout">
-            <!-- A special value for the timeout. In this case, the blocking font fetching will not
-              timeout and wait until a reply is received from the font provider. -->
+            
             <enum name="forever" value="-1"/>
         </attr>
         

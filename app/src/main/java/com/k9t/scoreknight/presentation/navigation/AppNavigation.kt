@@ -74,7 +74,7 @@ fun AppNavigation() {
                     viewModel = authViewModel,
                     onNavigateToLogin = { navController.popBackStack() },
                     onSuccess = { 
-                        navController.popBackStack("login", inclusive = true)
+                        navController.popBackStack()
                         // maybe pop back to the previous screen that requested auth
                     }
                 )
@@ -208,4 +208,5 @@ fun AppNavigation() {
         }
     }
 }
+
 

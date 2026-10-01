@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.k9t.scoreknight.app-mergeDebugResources-57:/values-watch-v20/values-watch-v20.xml",
+            "outputFile": "com.k9t.scoreknight.app-mergeDebugResources-58:/values-watch-v20/values-watch-v20.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\vek\\.gradle\\caches\\8.14.5\\transforms\\bae866ac4a3c00402187165530cea174\\transformed\\play-services-auth-20.7.0\\res\\values-watch-v20\\values.xml",
+                    "source": "C:\\Users\\vek\\.gradle\\caches\\8.14.5\\transforms\\4014ecb2da15ac7fdd3145614137208e\\transformed\\play-services-auth-20.7.0\\res\\values-watch-v20\\values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11",
                         "startColumns": "0,0,0,0,0,0,0,0",

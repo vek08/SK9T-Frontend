@@ -1,18 +1,22 @@
 [
     {
-        "merged": "com.k9t.scoreknight.app-debug-59:/font_poppins_medium.ttf.flat",
-        "source": "com.k9t.scoreknight.app-main-61:/font/poppins_medium.ttf"
+        "merged": "com.k9t.scoreknight.app-debug-60:/font_poppins_medium.ttf.flat",
+        "source": "com.k9t.scoreknight.app-main-62:/font/poppins_medium.ttf"
     },
     {
-        "merged": "com.k9t.scoreknight.app-debug-59:/font_poppins_bold.ttf.flat",
-        "source": "com.k9t.scoreknight.app-main-61:/font/poppins_bold.ttf"
+        "merged": "com.k9t.scoreknight.app-debug-60:/font_poppins_regular.ttf.flat",
+        "source": "com.k9t.scoreknight.app-main-62:/font/poppins_regular.ttf"
     },
     {
-        "merged": "com.k9t.scoreknight.app-debug-59:/font_poppins_semibold.ttf.flat",
-        "source": "com.k9t.scoreknight.app-main-61:/font/poppins_semibold.ttf"
+        "merged": "com.k9t.scoreknight.app-debug-60:/font_poppins_bold.ttf.flat",
+        "source": "com.k9t.scoreknight.app-main-62:/font/poppins_bold.ttf"
     },
     {
-        "merged": "com.k9t.scoreknight.app-debug-59:/font_poppins_regular.ttf.flat",
-        "source": "com.k9t.scoreknight.app-main-61:/font/poppins_regular.ttf"
+        "merged": "com.k9t.scoreknight.app-debug-60:/drawable_ic_google.xml.flat",
+        "source": "com.k9t.scoreknight.app-main-62:/drawable/ic_google.xml"
+    },
+    {
+        "merged": "com.k9t.scoreknight.app-debug-60:/font_poppins_semibold.ttf.flat",
+        "source": "com.k9t.scoreknight.app-main-62:/font/poppins_semibold.ttf"
     }
 ]

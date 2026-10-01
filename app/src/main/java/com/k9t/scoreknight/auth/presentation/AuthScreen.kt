@@ -9,11 +9,21 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.credentials.CredentialManager
+import androidx.credentials.GetCredentialRequest
+import androidx.credentials.exceptions.GetCredentialException
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import kotlinx.coroutines.launch
+import com.k9t.scoreknight.R
 import com.k9t.scoreknight.auth.domain.AuthRequest
+import androidx.credentials.CustomCredential
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -27,6 +37,10 @@ fun AuthScreen(
     
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var googleAuthError by remember { mutableStateOf<String?>(null) }
+
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(isLoggedIn, uiState) {
         if (isLoggedIn || uiState is AuthUiState.Success) {
@@ -53,12 +67,61 @@ fun AuthScreen(
             Spacer(modifier = Modifier.height(32.dp))
 
             Button(
-                onClick = { /* TODO: Launch Google Sign In */ },
+                onClick = {
+                    coroutineScope.launch {
+                        googleAuthError = null
+                        val credentialManager = CredentialManager.create(context)
+                        val clientId = context.getString(R.string.default_web_client_id)
+                        
+                        val googleIdOption = GetGoogleIdOption.Builder()
+                            .setFilterByAuthorizedAccounts(false)
+                            .setServerClientId(clientId)
+                            .build()
+                            
+                        val request = GetCredentialRequest.Builder()
+                            .addCredentialOption(googleIdOption)
+                            .build()
+                            
+                        try {
+                            val result = credentialManager.getCredential(
+                                request = request,
+                                context = context,
+                            )
+                            
+                            val credential = result.credential
+                            if (credential is CustomCredential &&
+                                credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL
+                            ) {
+                                val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)
+                                viewModel.googleLogin(googleIdTokenCredential.idToken)
+                            }
+                        } catch (e: GetCredentialException) {
+                            googleAuthError = "Google Sign-In cancelled or failed"
+                        } catch (e: Exception) {
+                            googleAuthError = e.message ?: "Google Sign-In error"
+                        }
+                    }
+                },
                 modifier = Modifier.fillMaxWidth().height(50.dp),
                 shape = RoundedCornerShape(8.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White)
             ) {
-                Text("Continue with Google", color = Color.Black, fontWeight = FontWeight.Bold)
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_google),
+                        contentDescription = "Google Logo",
+                        modifier = Modifier.size(24.dp),
+                        tint = Color.Unspecified
+                    )
+                    Spacer(modifier = Modifier.width(12.dp))
+                    Text("Continue with Google", color = Color.Black, fontWeight = FontWeight.Bold)
+                }
+            }
+            
+            if (googleAuthError != null) {
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(googleAuthError ?: "", color = Color.Red, fontSize = 12.sp)
+                
             }
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -130,3 +193,4 @@ fun AuthScreen(
         }
     }
 }
+
