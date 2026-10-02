@@ -26,7 +26,46 @@ ScoreKnight is a modern, native Android sports application providing live scores
 *   **Profile Management**: Account overview and secure logout functionality.
 *   **Optional Login**: Users can browse all sports data as guests, only needing to log in for personalized features.
 ### Favorites
-*   **Cross-Device Syncing**: When authenticated, users can favorite specific matches. These favorites are securely synced to the Spring Boot backend and retrieved automatically upon login, persisting state locally and remotely across app sessions.
+*   **Cross-Device Syncing**: When authenticated, users can favorite specific matches. These favorites are securely synced to the Spring Boot backend and retrieved automatically upon login, persisting state locally and remotely across app sessions
+
+## Screenshots
+
+### Landing
+
+| Cricket Landing | Football Landing |
+|---|---|
+| ![Cricket Landing](screenshots/cric_landingpage.jpeg) | ![Football Landing](screenshots/fb_landingpage.jpeg) |
+
+### Cricket
+
+| Home | Matches |
+|---|---|
+| ![Cricket Home](screenshots/cric_home.jpeg) | ![Cricket Matches](screenshots/cric_matches.jpg) |
+
+| Match Details | Home - Alternative View |
+|---|---|
+| ![Cricket Match Details](screenshots/cric_match_details.jpg) | ![Cricket Home](screenshots/cric_home2.jpg) |
+
+### Football
+
+| Home | Matches |
+|---|---|
+| ![Football Home](screenshots/fb_home.jpg) | ![Football Matches](screenshots/fb_matches.jpg) |
+
+| Match Details | Matches - Alternative View |
+|---|---|
+| ![Football Match Details](screenshots/fb_match_details.jpg) | ![Football Matches](screenshots/fb_matches2.jpg) |
+
+### Authentication & Profile
+
+| Login | Sign Up |
+|---|---|
+| ![Login](screenshots/login.jpg) | ![Sign Up](screenshots/signup.jpg) |
+
+| Profile | Favorites |
+|---|---|
+| ![Profile](screenshots/user_account.jpg) | ![Favorites](screenshots/fav.jpg) |
+  
 ## Technology Stack
 ### Android Frontend
 | Technology | Version | Purpose |
